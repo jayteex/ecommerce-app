@@ -3,14 +3,14 @@ const router = express.Router();
 const passport = require('passport');
 
 // Handler for GET request to /login - Display the login page/form
-router.get('/login', (req, res) => {
+router.get('/', (req, res) => {
     const errorMessage = req.query.error;
     // Render the login page with the error message
     // or send a response with the error message
     res.send('Login Page' + (errorMessage ? ` - Error: ${errorMessage}` : ''));
 });
 
-router.post('/login', (req, res, next) => {
+router.post('/', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
         if (err) {
             console.error(`Login Error: ${err}`);

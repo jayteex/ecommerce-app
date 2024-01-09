@@ -8,8 +8,13 @@ const passport = require('passport');
 const initializePassport = require('./config/passportConfig.js');
 // Include the routes
 const productRoutes = require('../src/routes/products.js');
-const userRoutes = require('../src/routes/register.js');
+const registerRoutes = require('../src/routes/register.js');
 const loginRoutes = require('../src/routes/login.js');
+const userRoutes = require('../src/routes/users.js');
+const cartRoutes = require('../src/routes/cart'); 
+const checkoutRoutes = require('../src/routes/checkout');
+const orderRoutes = require('../src/routes/orders');
+
 
 // Initialize passport
 initializePassport(passport);
@@ -58,11 +63,23 @@ app.get('/dashboard', (req, res) => {
   res.send('Welcome to your dashboard!');
 });
 
-// Use the user routes
-app.use('/api', userRoutes);
+// Use the register routes
+app.use('/register', registerRoutes);
 
 // Login routes
-app.use('/api', loginRoutes);
+app.use('/login', loginRoutes);
+
+// User routes
+app.use('/users', userRoutes);
+
+// Cart route
+app.use('/cart', cartRoutes);
+
+// Checkout route
+app.use('/', checkoutRoutes);
+
+// Order route
+app.use('/orders', orderRoutes);
 
 // General entry point into site
 app.get('/', async (req, res) => {
