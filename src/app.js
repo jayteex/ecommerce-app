@@ -6,6 +6,9 @@ const pool = require('./config/dbConfig.js');
 const session = require('express-session');
 const passport = require('passport');
 const initializePassport = require('./config/passportConfig.js');
+// Swagger
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 // Include the routes
 const productRoutes = require('../src/routes/products.js');
 const registerRoutes = require('../src/routes/register.js');
@@ -14,6 +17,22 @@ const userRoutes = require('../src/routes/users.js');
 const cartRoutes = require('../src/routes/cart'); 
 const checkoutRoutes = require('../src/routes/checkout');
 const orderRoutes = require('../src/routes/orders');
+
+// Swagger options
+const options = {
+  definition: {
+    openapi: '3.0.3', 
+    info: {
+      title: 'ECommerce App', 
+      version: '1.0.0', 
+    },
+  },
+  apis: ['./routes/*.js'], 
+  // Include the other paths...
+};
+
+const swaggerSpec = swaggerJsdoc(options);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Initialize passport
 initializePassport(passport);

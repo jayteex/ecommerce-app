@@ -4,6 +4,16 @@ const db = require('../config/dbConfig');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 
+/** 
+@swagger
+ * /users:
+ *   get:
+ * 
+ * 
+ * 
+ * 
+*/
+
 // GET a single user by ID
 router.get('/:userId', async (req, res) => {
 	try {
