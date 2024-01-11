@@ -1,4 +1,3 @@
-// routes/products.js
 const express = require('express');
 const router = express.Router();
 const db = require('../config/dbConfig.js'); 
@@ -39,7 +38,5 @@ router.get('/:productId', async (req, res) => {
         res.status(500).send('Server error');
     }
 });
-
-// Add more CRUD endpoints as needed here
 
 module.exports = router;

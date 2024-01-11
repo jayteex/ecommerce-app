@@ -4,8 +4,10 @@ const db = require('../config/dbConfig');
 
 // GET endpoint to retrieve all orders for a user
 router.get('/', async (req, res) => {
-    // Assuming user ID is obtained from authenticated session or token
-    const userId = req.session.userId; // or however you have implemented authentication
+    // How to specifically get the user id has to still be implememted 
+    // This is one way of doing it
+    // Session code needs to be updated 
+    const userId = req.session.userId; 
 
     try {
         const ordersQuery = 'SELECT * FROM orders WHERE customerid = $1';
@@ -21,7 +23,7 @@ router.get('/', async (req, res) => {
 // GET endpoint to retrieve details of a specific order
 router.get('/:orderId', async (req, res) => {
     const { orderId } = req.params;
-    // Again, assuming you can verify the user has rights to view this order
+    // More logic is needed
 
     try {
         const orderDetailsQuery = 'SELECT * FROM orderdetails WHERE orderid = $1';

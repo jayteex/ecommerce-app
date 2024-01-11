@@ -15,10 +15,10 @@ router.post('/cart/:cartId/checkout', async (req, res) => {
 
         // Simulate payment processing
         // For now, assume payment is always successful
-        // In a real scenario, integrate with a payment gateway
+        // In a real scenario, integration with a payment gateway would be necessary
 
         // Create an order
-        const customerId = cartResult.rows[0].customerid; // Assuming customerid is in cart
+        const customerId = cartResult.rows[0].customerid; // Is customerid in cart?
         const createOrderQuery = 'INSERT INTO orders (customerid, orderdate, status) VALUES ($1, NOW(), $2) RETURNING orderid';
         const orderResult = await db.query(createOrderQuery, [customerId, 'Processed']);
         const orderId = orderResult.rows[0].orderid;
@@ -27,8 +27,8 @@ router.post('/cart/:cartId/checkout', async (req, res) => {
         const cartItemsResult = await db.query('SELECT * FROM cartitems WHERE cartid = $1', [cartId]);
         for (const item of cartItemsResult.rows) {
             const insertOrderDetailQuery = 'INSERT INTO orderdetails (orderid, productid, quantity, price) VALUES ($1, $2, $3, $4)';
-            // Assuming price needs to be fetched or calculated. Placeholder value used here.
-            await db.query(insertOrderDetailQuery, [orderId, item.productid, item.quantity, 10]); // Replace 10 with actual price
+            // Placeholder value for price used here.
+            await db.query(insertOrderDetailQuery, [orderId, item.productid, item.quantity, 10]); // Replace 10 with actual price. Connection with products needed
         }
 
         res.status(201).send('Checkout successful');
