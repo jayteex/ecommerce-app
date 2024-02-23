@@ -1,7 +1,5 @@
-// Import createStore and combineReducers here.
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-
-// Import the slice reducers here.
+// Import the slice reducers here. I am using Reduc Toolkit in this app 
 import { listingReducer } from './features/listing/listingSlice.js';
 import { cartReducer } from './features/cart/cartSlice.js';
 import { currencyFilterReducer } from './features/currencyFilter/currencyFilterSlice.js';

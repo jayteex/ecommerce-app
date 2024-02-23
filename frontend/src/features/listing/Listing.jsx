@@ -5,6 +5,7 @@ import { inventoryData } from './mockData';
 import { calculatePrice, getCurrencySymbol } from '../../utils/currencyLogic';
 import { addItem } from '../cart/cartSlice.js';
 
+// The product listing 
 export const Listing = ({ currencyFilter }) => {
   const dispatch = useDispatch();
 

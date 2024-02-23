@@ -1,22 +1,17 @@
+// Express
 const express = require('express');
 const app = express();
 const port = 3000;
 const morgan = require('morgan');
+// Will be obsolete with supabase integration
 const pool = require('./config/dbConfig.js');
 const session = require('express-session');
+// Passport
 const passport = require('passport');
 const initializePassport = require('./config/passportConfig.js');
 // Swagger
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
-// Include the routes
-const productRoutes = require('./routes/products.js');
-const registerRoutes = require('./routes/register.js');
-const loginRoutes = require('./routes/login.js');
-const userRoutes = require('./routes/users.js');
-const cartRoutes = require('./routes/cart'); 
-const checkoutRoutes = require('./routes/checkout');
-const orderRoutes = require('./routes/orders');
 
 // Swagger options
 const options = {
@@ -30,7 +25,6 @@ const options = {
   apis: ['./routes/*.js'], 
   // Include the other paths...
 };
-
 const swaggerSpec = swaggerJsdoc(options);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
@@ -53,7 +47,7 @@ app.use((error, req, res, next) => {
       message: error.message || 'Internal Server Error',
     },
   });
-  next(); // Add this line to call the next middleware in the pipeline
+  next(); 
 });
 
 // Passport config
@@ -69,35 +63,26 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Route setup
+app.use('/api-docs', require('./routes/swaggerRoutes.js'));
+app.use('/register', require('./routes/register.js'));
+app.use('/login', require('./routes/login.js'));
+app.use('/users', require('./routes/users.js'));
+app.use('/cart', require('./routes/cart.js'));
+app.use('/checkout', require('./routes/checkout.js'));
+app.use('/orders', require('./routes/orders.js'));
+app.use('/home', require('./routes/products.js'));
+
 // Dashboard route
 app.get('/dashboard', (req, res) => {
   if (!req.isAuthenticated()) {
-      return res.redirect('/api/login');
+      return res.redirect('/login');
   }
   // Render or send the dashboard page
   res.send('Welcome to your dashboard!');
 });
 
-// Use the register routes
-app.use('/register', registerRoutes);
 
-// Login routes
-app.use('/login', loginRoutes);
-
-// User routes
-app.use('/users', userRoutes);
-
-// Cart route
-app.use('/cart', cartRoutes);
-
-// Checkout route
-app.use('/checkout', checkoutRoutes);
-
-// Order route
-app.use('/orders', orderRoutes);
-
-// Use the product routes
-app.use('/home', productRoutes);
 
 // General entry point into site
 app.get('/', async (req, res) => {
@@ -106,12 +91,12 @@ app.get('/', async (req, res) => {
     res.send(rows);
   } catch (error) {
     console.error(error);
-    res.status(500).send(error.message); // Send back the error message to the client for debugging purposes
+    res.status(500).send(error.message); 
   }
 });
 
 // Listener
 app.listen(port, () => {
-  console.log(`Ecommerce app listening on port ${port}`)
+  console.log(`Listening on port ${port}`)
 })
 

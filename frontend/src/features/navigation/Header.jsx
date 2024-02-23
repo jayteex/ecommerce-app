@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 export default function Header () {
 
-  // Replace the 4 <a> tags with <NavLink> components
+// Includes the nav bar with navigation links
   return (
     <div className="header">
       <NavLink to="/home">Home</NavLink>

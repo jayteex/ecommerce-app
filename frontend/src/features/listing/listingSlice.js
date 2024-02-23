@@ -5,7 +5,7 @@ const listingSlice = createSlice({
   initialState: [],
   reducers: {
     loadData(state, action) {
-      return action.payload; // Set the state to the payload
+      return action.payload; 
     }
   }
 });

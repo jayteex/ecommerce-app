@@ -6,8 +6,9 @@ import {
 } from '../../utils/currencyLogic';
 import { changeItemQuantity } from './cartSlice.js';
 
+// Might have to relocate Cart somewhere else 
 export const Cart = () => {
-  const dispatch = useDispatch(); // Get the dispatch function
+  const dispatch = useDispatch(); 
   const cart = useSelector((state) => state.cart);
   const currencyFilter = useSelector((state) => state.currencyFilter);
 
@@ -16,7 +17,7 @@ export const Cart = () => {
       return;
     }
     const newQuantity = Number(input);
-    dispatch(changeItemQuantity({ name, newQuantity })); // Dispatch the action
+    dispatch(changeItemQuantity({ name, newQuantity })); 
   };
 
   const cartElements = cart ? Object.keys(cart).map(createCartItem) : null;

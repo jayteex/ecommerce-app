@@ -7,6 +7,7 @@ import "../index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
+// The Provider wraps the whole application in Redux, so everything can access the store
 root.render(
   <React.StrictMode>
     <Provider store={store}>
