@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 // import useNavigate
 import { useNavigate } from "react-router-dom";
 
-export default function SignUp () {
+export default function SignIn () {
   const [username, setUsername] = useState("");
   const dispatch = useDispatch();
 

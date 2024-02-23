@@ -10,13 +10,13 @@ const initializePassport = require('./config/passportConfig.js');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 // Include the routes
-const productRoutes = require('../src/routes/products.js');
-const registerRoutes = require('../src/routes/register.js');
-const loginRoutes = require('../src/routes/login.js');
-const userRoutes = require('../src/routes/users.js');
-const cartRoutes = require('../src/routes/cart'); 
-const checkoutRoutes = require('../src/routes/checkout');
-const orderRoutes = require('../src/routes/orders');
+const productRoutes = require('./routes/products.js');
+const registerRoutes = require('./routes/register.js');
+const loginRoutes = require('./routes/login.js');
+const userRoutes = require('./routes/users.js');
+const cartRoutes = require('./routes/cart'); 
+const checkoutRoutes = require('./routes/checkout');
+const orderRoutes = require('./routes/orders');
 
 // Swagger options
 const options = {
@@ -69,9 +69,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Use the product routes
-app.use('/products', productRoutes);
-
 // Dashboard route
 app.get('/dashboard', (req, res) => {
   if (!req.isAuthenticated()) {
@@ -94,10 +91,13 @@ app.use('/users', userRoutes);
 app.use('/cart', cartRoutes);
 
 // Checkout route
-app.use('/', checkoutRoutes);
+app.use('/checkout', checkoutRoutes);
 
 // Order route
 app.use('/orders', orderRoutes);
+
+// Use the product routes
+app.use('/home', productRoutes);
 
 // General entry point into site
 app.get('/', async (req, res) => {

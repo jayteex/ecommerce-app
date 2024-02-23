@@ -1,6 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
-// Import the NavLink component.
 import { NavLink } from "react-router-dom";
+
 
 export default function Header () {
 
@@ -8,7 +7,7 @@ export default function Header () {
   return (
     <div className="header">
       <NavLink to="/home">Home</NavLink>
-      <NavLink to="/sign-up">Sign Up</NavLink>
+      <NavLink to="/sign-in">Sign In</NavLink>
       <NavLink to="/about">About</NavLink>
     </div>
   )
