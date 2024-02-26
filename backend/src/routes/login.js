@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 
+/*
+
 // Handler for GET request to /login - Display the login page/form
 router.get('/', (req, res) => {
     const errorMessage = req.query.error;
@@ -32,3 +34,5 @@ router.post('/', (req, res, next) => {
 });
 
 module.exports = router;
+
+*/

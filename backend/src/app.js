@@ -3,17 +3,25 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const morgan = require('morgan');
-// Will be obsolete with supabase integration
-const pool = require('./config/dbConfig.js');
 const session = require('express-session');
-// Passport
-const passport = require('passport');
-const initializePassport = require('./config/passportConfig.js');
 // Cors
 const cors = require('cors');
 
+/*
+// Passport
+const passport = require('passport');
+const initializePassport = require('./config/passportConfig.js');
 // Initialize passport
 initializePassport(passport);
+
+// Use passport
+app.use(passport.initialize());
+app.use(passport.session());
+*/
+
+// Images for products
+// Serve static files from the 'pictures' directory
+app.use('/images', express.static('/images'));
 
 // Middleware to parse JSON bodies
 app.use(express.json());
@@ -36,10 +44,11 @@ app.use((error, req, res, next) => {
 
 // Use CORS
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://ecommerce-app-frontend-d845.onrender.com']
+  origin: ['http://localhost:5173', 'https://ecommerce-app-frontend-d845.onrender.com', 'https://pixabay.com']
 }));
 
-// Passport config
+/*
+// Session
 app.use(session({
   secret: process.env.SESSION_SECRET, // Secret used to sign the session ID cookie
   resave: false, // Don't save session if unmodified
@@ -49,17 +58,19 @@ app.use(session({
     secure: process.env.NODE_ENV === "production", // Ensures cookies are only used over HTTPS
   }
 }));
-app.use(passport.initialize());
-app.use(passport.session());
+*/
 
 // Route setup
 app.use('/home', require('./routes/products.js'));
+
+/*
 app.use('/register', require('./routes/register.js'));
 app.use('/login', require('./routes/login.js'));
 app.use('/users', require('./routes/users.js'));
 app.use('/cart', require('./routes/cart.js'));
 app.use('/checkout', require('./routes/checkout.js'));
 app.use('/orders', require('./routes/orders.js'));
+*/
 
 // Listener (Only start server if this file is being executed directly)
 if (require.main === module) {

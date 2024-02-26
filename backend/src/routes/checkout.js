@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../config/dbConfig'); 
+
+let db;
 
 // POST endpoint for checkout
 router.post('/cart/:cartId/checkout', async (req, res) => {

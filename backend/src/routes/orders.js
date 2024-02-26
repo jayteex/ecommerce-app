@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../config/dbConfig'); 
+
+let db;
 
 // GET endpoint to retrieve all orders for a user
 router.get('/', async (req, res) => {

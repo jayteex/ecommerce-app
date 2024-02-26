@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../config/dbConfig'); 
+
+let db;
 
 // POST endpoint to add items to a cart
 router.post('/:cartId', async (req, res) => {

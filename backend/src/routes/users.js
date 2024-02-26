@@ -1,18 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../config/dbConfig'); 
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 
-/** 
-@swagger
- * /users:
- *   get:
- * 
- * 
- * 
- * 
-*/
+let db;
 
 // GET a single user by ID
 router.get('/:userId', async (req, res) => {
