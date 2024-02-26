@@ -1,8 +1,8 @@
 // Express
 const express = require('express');
 const app = express();
-const port = 3000;
 const morgan = require('morgan');
+const path = require('path');
 const session = require('express-session');
 // Cors
 const cors = require('cors');
@@ -26,7 +26,7 @@ app.use(cors({
 
 // Images for products
 // Serve static files from the 'pictures' directory
-app.use('/images', express.static('/images'));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // Middleware to parse JSON bodies
 app.use(express.json());
@@ -72,6 +72,11 @@ app.use('/cart', require('./routes/cart.js'));
 app.use('/checkout', require('./routes/checkout.js'));
 app.use('/orders', require('./routes/orders.js'));
 */
+
+// Redirect root URL to "/home"
+app.get('/', (req, res) => {
+  res.redirect('/home');
+});
 
 // Listener (Only start server if this file is being executed directly)
 if (require.main === module) {
