@@ -19,6 +19,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 */
 
+// Redirect root URL to "/home"
+app.get('/', (req, res) => {
+  res.redirect('/home');
+});
+
 // Use CORS
 app.use(cors({
   origin: ['http://localhost:5173', 'https://ecommerce-app-frontend-d845.onrender.com', 'https://pixabay.com']
@@ -72,11 +77,6 @@ app.use('/cart', require('./routes/cart.js'));
 app.use('/checkout', require('./routes/checkout.js'));
 app.use('/orders', require('./routes/orders.js'));
 */
-
-// Redirect root URL to "/home"
-app.get('/', (req, res) => {
-  res.redirect('/home');
-});
 
 // Listener (Only start server if this file is being executed directly)
 if (require.main === module) {
