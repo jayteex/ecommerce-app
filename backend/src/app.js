@@ -19,6 +19,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 */
 
+// Use CORS
+app.use(cors({
+  origin: ['http://localhost:5173', 'https://ecommerce-app-frontend-d845.onrender.com', 'https://pixabay.com']
+}));
+
 // Images for products
 // Serve static files from the 'pictures' directory
 app.use('/images', express.static('/images'));
@@ -42,10 +47,6 @@ app.use((error, req, res, next) => {
   next(); 
 });
 
-// Use CORS
-app.use(cors({
-  origin: ['http://localhost:5173', 'https://ecommerce-app-frontend-d845.onrender.com', 'https://pixabay.com']
-}));
 
 /*
 // Session
