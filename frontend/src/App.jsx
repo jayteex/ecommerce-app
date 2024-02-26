@@ -20,14 +20,13 @@ function ListingWrapper() {
 
 const router = createBrowserRouter(createRoutesFromElements(
   // The Root component contains the Header and Footer 
-  
     <Route path="/" element={<Root />}>
       <Route index element={<Navigate to="/home" replace />} />
       <Route path="home" element={<ListingWrapper />} />
       <Route path="about" element={<About />} />
       <Route path="sign-in" element={<SignIn />} />
     </Route>
-  
+
 )
 );
 
