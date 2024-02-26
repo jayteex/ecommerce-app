@@ -6,7 +6,6 @@ const supabase = require('../config/supabase');
 router.get('/', async (req, res) => {
     try {
         const { category } = req.query;
-
         let { data: products, error } = await supabase
             .from('products')
             .select('*');
@@ -14,7 +13,6 @@ router.get('/', async (req, res) => {
         if (error) {
             throw error;
         }
-
         if (category) {
             ({ data: products, error } = await supabase
                 .from('products')
@@ -25,7 +23,6 @@ router.get('/', async (req, res) => {
                 throw error;
             }
         }
-
         res.json(products);
     } catch (err) {
         console.error(err);

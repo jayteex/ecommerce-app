@@ -18,7 +18,6 @@ function ListingWrapper() {
   );
 }
 
-
 const router = createBrowserRouter(createRoutesFromElements(
   // The Root component contains the Header and Footer 
   <Route path="/" element={<Root />}>

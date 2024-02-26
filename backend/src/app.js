@@ -9,24 +9,8 @@ const session = require('express-session');
 // Passport
 const passport = require('passport');
 const initializePassport = require('./config/passportConfig.js');
-// Swagger
-const swaggerJsdoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
-
-// Swagger options
-const options = {
-  definition: {
-    openapi: '3.0.3', 
-    info: {
-      title: 'ECommerce App', 
-      version: '1.0.0', 
-    },
-  },
-  apis: ['./routes/*.js'], 
-  // Include the other paths...
-};
-const swaggerSpec = swaggerJsdoc(options);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// Cors
+const cors = require('cors');
 
 // Initialize passport
 initializePassport(passport);
@@ -50,6 +34,11 @@ app.use((error, req, res, next) => {
   next(); 
 });
 
+// Use CORS
+app.use(cors({
+  origin: 'http://localhost:5173' // Allow requests from this origin only
+}));
+
 // Passport config
 app.use(session({
   secret: process.env.SESSION_SECRET, // Secret used to sign the session ID cookie
@@ -64,15 +53,43 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Route setup
-app.use('/api-docs', require('./routes/swaggerRoutes.js'));
+app.use('/home', require('./routes/products.js'));
 app.use('/register', require('./routes/register.js'));
 app.use('/login', require('./routes/login.js'));
 app.use('/users', require('./routes/users.js'));
 app.use('/cart', require('./routes/cart.js'));
 app.use('/checkout', require('./routes/checkout.js'));
 app.use('/orders', require('./routes/orders.js'));
-app.use('/home', require('./routes/products.js'));
 
+// Listener (Only start server if this file is being executed directly)
+if (require.main === module) {
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => {
+    console.log(`Listening on port ${port}`);
+  });
+}
+
+module.exports = app;
+
+
+/*
+// Swagger options
+const options = {
+  definition: {
+    openapi: '3.0.3', 
+    info: {
+      title: 'ECommerce App', 
+      version: '1.0.0', 
+    },
+  },
+  apis: ['./routes/*.js'], 
+  // Include the other paths...
+};
+const swaggerSpec = swaggerJsdoc(options);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+*/
+
+/*
 // Dashboard route
 app.get('/dashboard', (req, res) => {
   if (!req.isAuthenticated()) {
@@ -81,9 +98,10 @@ app.get('/dashboard', (req, res) => {
   // Render or send the dashboard page
   res.send('Welcome to your dashboard!');
 });
+*/
 
 
-
+/*
 // General entry point into site
 app.get('/', async (req, res) => {
   try {
@@ -94,9 +112,4 @@ app.get('/', async (req, res) => {
     res.status(500).send(error.message); 
   }
 });
-
-// Listener
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`)
-})
-
+*/
