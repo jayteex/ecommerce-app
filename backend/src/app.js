@@ -36,7 +36,7 @@ app.use((error, req, res, next) => {
 
 // Use CORS
 app.use(cors({
-  origin: 'http://localhost:5173' // Allow requests from this origin only
+  origin: ['http://localhost:5173', 'https://your-frontend-service.onrender.com']
 }));
 
 // Passport config

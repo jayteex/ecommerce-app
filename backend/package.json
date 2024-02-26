@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon src/app.js",
     "test": "jest",
-    "build": "echo 'No build step needed'"
+    "build": "npm install"
   },
   "author": "JT",
   "license": "SEE LICENSE IN LICENSE",

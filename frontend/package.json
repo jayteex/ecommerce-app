@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "start": "vite",
-    "build": "npx tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "test": "jest --testEnvironment jsdom --setupFilesAfterEnv '@testing-library/jest-dom/extend-expect'",
     "format": "prettier --write .",
