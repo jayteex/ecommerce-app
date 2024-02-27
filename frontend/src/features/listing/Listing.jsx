@@ -1,3 +1,4 @@
+// frontend/src/features/listing/Listing.jsx
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadData } from './listingSlice';
@@ -46,12 +47,14 @@ export const Listing = ({ currencyFilter }) => {
           <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmExdWxtbmR0NjJlZWZqc3cwODhpcmRwbnVwbnUxcmF6M2U5dXVpOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/DhstvI3zZ598Nb1rFf/giphy.gif" alt="Loading" />
         </div>
       );
-    }, 300);
+    }, 200);
   }
 
 
   if (!products || products.length === 0) {
+    setTimeout(() => {
     return <p>Sorry, no products are currently available...</p>;
+    }, 300);
   }
 
   return (

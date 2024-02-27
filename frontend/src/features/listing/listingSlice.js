@@ -1,3 +1,4 @@
+// frontend/src/features/listing/listingSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const listingSlice = createSlice({

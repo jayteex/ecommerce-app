@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { setCurrency } from './currencyFilterSlice';
-import { currenciesData } from '../listing/mockData';
+import { currenciesData } from './mockData';
 
 export const CurrencyFilter = ({ currencyFilter }) => {
   const dispatch = useDispatch();

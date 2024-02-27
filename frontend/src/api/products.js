@@ -1,3 +1,4 @@
+// frontend/src/api/product.js
 import { HOST } from ".";
 
 export const getProducts = async() => {

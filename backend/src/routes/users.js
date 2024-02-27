@@ -2,20 +2,27 @@ const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
-
-let db;
+const { supabase } = require('../config/supabase');
 
 // GET a single user by ID
 router.get('/:userId', async (req, res) => {
 	try {
 		const { userId } = req.params;
-		const { rows } = await db.query('SELECT * FROM customers WHERE customerid = $1', [userId]);
+		const { data: user, error } = await supabase
+            .from('customers')
+            .select('*')
+            .eq('customerid', userId)
+            .single();
 
-		if (rows.length === 0) {
+		if (error) {
+			console.error(error);
+			return res.status(500).send('Server error');
+		}
+
+		if (!user) {
 			return res.status(404).send('User not found');
 		}
 
-		const user = rows[0];
 		delete user.password;
 
 		res.json(user);
@@ -28,13 +35,13 @@ router.get('/:userId', async (req, res) => {
 // Update a specific user
 router.put('/:userId', [
 	body('email').optional().isEmail(),
-	body('name').optional().notEmpty(),
+	body('firstname').optional().notEmpty(),
+	body('lastname').optional().notEmpty(),
 	body('address').optional().notEmpty(),
-	body('phone').optional().notEmpty(),
 ], async (req, res) => {
 	try {
 		const { userId } = req.params;
-		const { name, email, password, address, phone } = req.body;
+		const { firstname, lastname, email, password, address } = req.body;
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
 			return res.status(400).json({ errors: errors.array() });
@@ -44,9 +51,13 @@ router.put('/:userId', [
 		let fieldValues = [];
 		let fieldCount = 1;
 
-		if (name) {
-			updateFields.push(`name = $${fieldCount++}`);
-			fieldValues.push(name);
+		if (firstname) {
+			updateFields.push(`firstname = $${fieldCount++}`);
+			fieldValues.push(firstname);
+		}
+		if (lastname) {
+			updateFields.push(`lastname = $${fieldCount++}`);
+			fieldValues.push(lastname);
 		}
 		if (email) {
 			updateFields.push(`email = $${fieldCount++}`);
@@ -61,10 +72,6 @@ router.put('/:userId', [
 			updateFields.push(`address = $${fieldCount++}`);
 			fieldValues.push(address);
 		}
-		if (phone) {
-			updateFields.push(`phone = $${fieldCount++}`);
-			fieldValues.push(phone);
-		}
 
 		if (updateFields.length === 0) {
 			return res.status(400).send('No update information provided');
@@ -73,11 +80,7 @@ router.put('/:userId', [
 		const updateQuery = `UPDATE customers SET ${updateFields.join(', ')} WHERE customerid = $${fieldCount}`;
 		fieldValues.push(userId);
 
-		// Debugging
-		console.log("Update Query:", updateQuery);
-		console.log("Field Values:", fieldValues);
-
-		await db.query(updateQuery, fieldValues);
+		await supabase.from('customers').update(updateQuery, fieldValues);
 
 		res.send('User updated successfully');
 	} catch (err) {

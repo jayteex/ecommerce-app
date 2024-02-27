@@ -1,4 +1,5 @@
-import * as React from 'react';
+// frontend/src/features/login/SignUp.jsx
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,31 +13,57 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser } from '../../api/signUp.js';
+import { signupRequest, signupSuccess, signupFailure } from './signUpSlice.js';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-// TODO remove, this demo shouldn't need to reset the theme.
-
-const defaultTheme = createTheme();
+const defaultTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#000000', // primary color
+    },
+    secondary: {
+      main: '#fffff', // secondary color
+    },
+  },
+  typography: {
+    fontFamily: 'Oxygen, sans-serif', 
+  },
+});
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+
+  const dispatch = useDispatch();
+  
+  const [formData, setFormData] = useState({
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: '',
+    address: '',
+  });
+
+  const isLoading = useSelector((state) => state.signup.isLoading);
+  const error = useSelector((state) => state.signup.error);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+    dispatch(signupRequest());
+    try {
+      const response = await registerUser(formData);
+      console.log('Response data:', response); // Log the response data
+      dispatch(signupSuccess());
+      // You can redirect the user or show a success message here
+    } catch (error) {
+      console.error('Signup failed with error:', error.message);
+      dispatch(signupFailure(error.message));
+    }
+  };
+
+  const handleInputChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
     });
   };
 
@@ -63,12 +90,13 @@ export default function SignUp() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="firstname"
                   required
                   fullWidth
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -77,8 +105,9 @@ export default function SignUp() {
                   fullWidth
                   id="lastName"
                   label="Last Name"
-                  name="lastName"
+                  name="lastname"
                   autoComplete="family-name"
+                  onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -89,6 +118,7 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -100,6 +130,18 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="address"
+                  label="Address"
+                  id="address"
+                  autoComplete="address"
+                  onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -114,9 +156,11 @@ export default function SignUp() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={isLoading}
             >
-              Sign Up
+              {isLoading ? 'Signing Up...' : 'Sign Up'}
             </Button>
+            {error && <Typography color="error">{error}</Typography>}
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="#" variant="body2">
@@ -126,58 +170,7 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );
 }
-
-
-
-
-
-
-
-
-/*
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-// import useNavigate
-import { useNavigate } from "react-router-dom";
-
-export default function SignIn () {
-  const [username, setUsername] = useState("");
-  const dispatch = useDispatch();
-
-   // Grab the navigate function
-   const navigate = useNavigate();
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    dispatch(signUp({username: username}));
-    // imperatively redirect the user to /profile
-    navigate("/profile")
-  }
-
-  return (
-    <section>
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username
-          <div>
-            <input
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.currentTarget.value)}
-            />
-            <button type="submit" className="primary">
-              Sign Up
-            </button>
-          </div>
-        </label>
-      </form>
-    </section>
-  );
-}
-*/

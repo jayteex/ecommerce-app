@@ -5,7 +5,7 @@ import "../index.css";
 import { Route, Routes, RouterProvider, createBrowserRouter, createRoutesFromElements, Navigate } from 'react-router-dom';
 import Root from './features/navigation/Root';
 import About from './features/navigation/About';
-import SignIn from './features/login/SignIn';
+import SignIn from './features/login/SignUp';
 
 // A wrapper that combines some components, so that they can be used in the Router below
 function ListingWrapper() {

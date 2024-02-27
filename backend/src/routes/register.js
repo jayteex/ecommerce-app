@@ -1,58 +1,70 @@
+// backend/src/routes/register.js
 const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
-
-let db;
+const supabase = require('../config/supabase');
 
 router.post('/',
-    // Validation
-    body('email').isEmail().withMessage('Enter a valid email address'),
-    body('name').notEmpty().withMessage('Name is required'),
-    body('address').notEmpty().withMessage('Address is required'),
-    body('phone').notEmpty().withMessage('Phone number is required'),
-    async (req, res) => {
-        // Check for validation errors
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
+  // Validation middleware
+  body('email').isEmail().withMessage('Enter a valid email address'),
+  body('firstname').notEmpty().withMessage('First name is required'),
+  body('lastname').notEmpty().withMessage('Last name is required'),
+  body('address').notEmpty().withMessage('Address is required'),
+  async (req, res) => {
+    // Check for validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-        try {
-            const { name, email, password, address, phone } = req.body;
+    try {
+      const { firstname, lastname, email, password, address } = req.body;
 
-            // Check if customer already exists
-            const customerExists = await db.query('SELECT * FROM customers WHERE email = $1', [email]);
-            if (customerExists.rows.length) {
-                return res.status(409).send('Registration failed, customer already exists');
-            }
+      // Hash password
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-            // Hash password
-            const saltRounds = 10;
-            const hashedPassword = await bcrypt.hash(password, saltRounds);
+      // Check if customer already exists
+      const { data: existingCustomers, error: customerError } = await supabase
+        .from('customers')
+        .select('customerid')
+        .order('customerid', { ascending: false }) // Get the highest customerid
+        .limit(1);
 
-            // Start a database transaction
-            await db.query('BEGIN');
+      if (customerError) {
+        console.error('Error fetching existing customers:', customerError.message);
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
 
-            // Insert new customer into database
-            const insertCustomerQuery = 'INSERT INTO customers (name, email, password, address, phone) VALUES ($1, $2, $3, $4, $5) RETURNING customerid';
-            const customerResult = await db.query(insertCustomerQuery, [name, email, hashedPassword, address, phone]);
-            const customerId = customerResult.rows[0].customerid;
+      const maxCustomerId = existingCustomers.length > 0 ? existingCustomers[0].customerid : 0;
+      const newCustomerId = maxCustomerId + 1;
 
-            // Create a new cart for the customer
-            const insertCartQuery = 'INSERT INTO cart (customerid, dateadded) VALUES ($1, NOW())';
-            await db.query(insertCartQuery, [customerId]);
+      // Insert new customer into database with calculated customerid
+      const { data: insertedCustomer, error: insertError } = await supabase
+        .from('customers')
+        .insert([{ customerid: newCustomerId, firstname, lastname, email, password: hashedPassword, address }]);
 
-            // Commit the transaction
-            await db.query('COMMIT');
+      if (insertError) {
+        console.error('Error inserting new customer:', insertError.message);
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
 
-            res.status(201).send('Customer registered successfully');
-        } catch (err) {
-            // If an error occurs, roll back the transaction
-            await db.query('ROLLBACK');
-            console.error('Error:', err.message);
-            res.status(500).send('Server error');
-        }
-    });
+      // Create a new cart for the customer
+      const { error: cartError } = await supabase
+        .from('cart')
+        .insert([{ customerid: newCustomerId, dateadded: new Date() }]);
+
+      if (cartError) {
+        console.error('Error creating cart:', cartError.message);
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
+
+      res.status(201).json({ message: 'Customer registered successfully' });
+    } catch (err) {
+      console.error('Error:', err.message);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
 
 module.exports = router;
