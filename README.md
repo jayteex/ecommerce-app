@@ -9,13 +9,13 @@ A soon to be full stack (PERN) ecommerce store, with a Postgres database, Node/E
 ## Technologies used
 
 - PostgreSQL
- - Supabase
+  - Supabase
 - Express.js
- - Passport
- - Session
- - CORS
+  - Passport
+  - Session
+  - CORS
 - React & React Router
- - Axios
+  - Axios
 - Redux Toolkit
 - Node.js
 - Jest, Supertest, Morgan
