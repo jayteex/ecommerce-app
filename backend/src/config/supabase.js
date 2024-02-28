@@ -1,4 +1,4 @@
-// Connecting subapase to this project
+// backend/src/config/supabase.js
 require("dotenv").config();
 const { createClient } = require("@supabase/supabase-js");
 

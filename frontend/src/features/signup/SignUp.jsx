@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
+import { NavLink } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -15,26 +16,26 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../../api/signUp.js';
-import { signupRequest, signupSuccess, signupFailure } from './signUpSlice.js';
+import { signUpRequest, signUpSuccess, signUpFailure } from './signUpSlice.js';
 
 const defaultTheme = createTheme({
   palette: {
     primary: {
-      main: '#000000', // primary color
+      main: '#000000',
     },
     secondary: {
-      main: '#fffff', // secondary color
+      main: '#fffff',
     },
   },
   typography: {
-    fontFamily: 'Oxygen, sans-serif', 
+    fontFamily: 'Oxygen, sans-serif',
   },
 });
 
 export default function SignUp() {
 
   const dispatch = useDispatch();
-  
+
   const [formData, setFormData] = useState({
     firstname: '',
     lastname: '',
@@ -43,20 +44,20 @@ export default function SignUp() {
     address: '',
   });
 
-  const isLoading = useSelector((state) => state.signup.isLoading);
-  const error = useSelector((state) => state.signup.error);
+  const isLoading = useSelector((state) => state.signUp.isLoading);
+  const error = useSelector((state) => state.signUp.error);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    dispatch(signupRequest());
+    dispatch(signUpRequest());
     try {
       const response = await registerUser(formData);
       console.log('Response data:', response); // Log the response data
-      dispatch(signupSuccess());
+      dispatch(signUpSuccess());
       // You can redirect the user or show a success message here
     } catch (error) {
       console.error('Signup failed with error:', error.message);
-      dispatch(signupFailure(error.message));
+      dispatch(signUpFailure(error.message));
     }
   };
 
@@ -69,6 +70,7 @@ export default function SignUp() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
+
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -93,7 +95,7 @@ export default function SignUp() {
                   name="firstname"
                   required
                   fullWidth
-                  id="firstName"
+                  id="firstname"
                   label="First Name"
                   autoFocus
                   onChange={handleInputChange}
@@ -103,7 +105,7 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
+                  id="lastname"
                   label="Last Name"
                   name="lastname"
                   autoComplete="family-name"
@@ -163,7 +165,7 @@ export default function SignUp() {
             {error && <Typography color="error">{error}</Typography>}
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link component={NavLink} to="/sign-in" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
@@ -171,6 +173,7 @@ export default function SignUp() {
           </Box>
         </Box>
       </Container>
+
     </ThemeProvider>
   );
 }

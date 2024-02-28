@@ -6,26 +6,23 @@ import { getProducts } from '../../api/products.js';
 import { calculatePrice, getCurrencySymbol } from '../../utils/currencyLogic';
 import { addItem } from '../cart/cartSlice';
 
-// The product listing 
 export const Listing = ({ currencyFilter }) => {
   const dispatch = useDispatch();
-  const [isDataFetched, setIsDataFetched] = useState(false); // State to track whether data has been fetched before
-  const [showLoading, setShowLoading] = useState(false); // State to track whether to show loading message
+  const [isDataFetched, setIsDataFetched] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => {
     if (!isDataFetched) {
-      // Show loading message only if it hasn't been shown before
       setShowLoading(true);
-      // Fetch product data from backend when the component mounts and data hasn't been fetched before
       const fetchProducts = async () => {
         try {
-          const products = await getProducts(); // Fetch products from backend
-          dispatch(loadData(products)); // Dispatch the action to load data into Redux store
-          setIsDataFetched(true); // Set data fetched flag to true
-          setShowLoading(false); // Hide loading message after data is fetched
+          const products = await getProducts();
+          dispatch(loadData(products));
+          setIsDataFetched(true);
+          setShowLoading(false);
         } catch (error) {
           console.error('Error fetching products:', error);
-          setShowLoading(false); // Hide loading message in case of error
+          setShowLoading(false);
         }
       };
       fetchProducts();
@@ -39,22 +36,17 @@ export const Listing = ({ currencyFilter }) => {
   };
 
   if (showLoading) {
-    setTimeout(() => {
-      return (
-        <div className="loading-container">
-          <p>Due to the slowness of Render's free tier, fetching of assets on initial load might take 5-10 seconds.</p>
-          <p>Sorry for the inconvenience, I hope you have a nice day!</p>
-          <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmExdWxtbmR0NjJlZWZqc3cwODhpcmRwbnVwbnUxcmF6M2U5dXVpOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/DhstvI3zZ598Nb1rFf/giphy.gif" alt="Loading" />
-        </div>
-      );
-    }, 200);
+    return (
+      <div className="loading-container">
+        <p>Due to the slowness of Render's free tier, fetching of assets on initial load might take 5-10 seconds.</p>
+        <p>Sorry for the inconvenience, I hope you have a nice day!</p>
+        <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmExdWxtbmR0NjJlZWZqc3cwODhpcmRwbnVwbnUxcmF6M2U5dXVpOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/DhstvI3zZ598Nb1rFf/giphy.gif" alt="Loading" />
+      </div>
+    );
   }
 
-
   if (!products || products.length === 0) {
-    setTimeout(() => {
     return <p>Sorry, no products are currently available...</p>;
-    }, 300);
   }
 
   return (
@@ -78,3 +70,4 @@ export const Listing = ({ currencyFilter }) => {
     </ul>
   );
 };
+

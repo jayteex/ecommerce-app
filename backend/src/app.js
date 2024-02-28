@@ -1,10 +1,10 @@
 // backend/src/app.js
 const express = require('express');
 const app = express();
+require('dotenv').config();
 const morgan = require('morgan');
 const path = require('path');
 const session = require('express-session');
-// Cors
 const cors = require('cors');
 
 // Middleware to set Content-Type header for JSON responses
@@ -13,6 +13,25 @@ app.use((req, res, next) => {
   next();
 });
 
+// Session
+app.use(session({
+  secret: process.env.SESSION_SECRET, 
+  resave: true, // Don't save session if unmodified
+  saveUninitialized: true, // Don't create session until something stored
+  cookie: {
+    httpOnly: true, 
+    secure: process.env.NODE_ENV === "production", 
+    maxAge: 24 * 60 * 60 * 1000, 
+  }
+}));
+
+// Passport
+const passport = require('passport');
+const initializePassport = require('./config/passportConfig.js');
+initializePassport(passport);
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Redirect root URL to "/home"
 app.get('/', (req, res) => {
   res.redirect('/home');
@@ -20,11 +39,11 @@ app.get('/', (req, res) => {
 
 // Use CORS
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://ecommerce-app-frontend-d845.onrender.com', 'https://pixabay.com']
+  origin: ['http://localhost:5173', 'https://ecommerce-app-frontend-d845.onrender.com', 'https://pixabay.com'],
+  credentials: true
 }));
 
 // Images for products
-// Serve static files from the 'pictures' directory
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // Middleware to parse JSON bodies
@@ -43,12 +62,13 @@ app.use((error, req, res, next) => {
       message: error.message || 'Internal Server Error',
     },
   });
-  next(); 
+  next();
 });
 
 // Route setup
 app.use('/home', require('./routes/products.js'));
-app.use('/sign-in', require('./routes/register.js')); // Adjusted route to '/sign-in'
+app.use('/sign-up', require('./routes/register.js')); // Adjusted route to '/sign-up'
+app.use('/sign-in', require('./routes/login.js'));
 
 // Listener (Only start server if this file is being executed directly)
 if (require.main === module) {
@@ -61,18 +81,6 @@ if (require.main === module) {
 module.exports = app;
 
 
-/*
-// Session
-app.use(session({
-  secret: process.env.SESSION_SECRET, // Secret used to sign the session ID cookie
-  resave: false, // Don't save session if unmodified
-  saveUninitialized: false, // Don't create session until something stored
-  cookie: {
-    httpOnly: true, // Prevents client side JS from reading the cookie 
-    secure: process.env.NODE_ENV === "production", // Ensures cookies are only used over HTTPS
-  }
-}));
-*/
 
 /*
 app.use('/login', require('./routes/login.js'));
@@ -80,17 +88,5 @@ app.use('/users', require('./routes/users.js'));
 app.use('/cart', require('./routes/cart.js'));
 app.use('/checkout', require('./routes/checkout.js'));
 app.use('/orders', require('./routes/orders.js'));
-*/
 
-
-/*
-// Passport
-const passport = require('passport');
-const initializePassport = require('./config/passportConfig.js');
-// Initialize passport
-initializePassport(passport);
-
-// Use passport
-app.use(passport.initialize());
-app.use(passport.session());
 */

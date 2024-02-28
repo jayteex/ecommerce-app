@@ -1,11 +1,13 @@
+// backend/src/config/passportConfig.js
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 const supabase = require('./supabase'); 
 
 const initialize = (passport) => {
+    // Defining Strategy
     passport.use(new LocalStrategy({ usernameField: 'email', passwordField: 'password' }, async (email, password, done) => {
         try {
-            const { data: users, error } = await supabase
+            const { data: dbuser, error } = await supabase
                 .from('customers')
                 .select('*')
                 .eq('email', email)
@@ -16,8 +18,8 @@ const initialize = (passport) => {
                 return done(error);
             }
 
-            if (users) {
-                const user = users;
+            if (dbuser) {
+                const user = dbuser;
                 if (await bcrypt.compare(password, user.password)) {
                     console.log(`Authentication Success: User ${email} logged in`);
                     return done(null, user);
@@ -35,10 +37,12 @@ const initialize = (passport) => {
         }
     }));
 
+    // De- and serialization
     passport.serializeUser((user, done) => done(null, user.customerid));
+
     passport.deserializeUser(async (id, done) => {
         try {
-            const { data: users, error } = await supabase
+            const { data: dbuser, error } = await supabase
                 .from('customers')
                 .select('*')
                 .eq('customerid', id)
@@ -49,7 +53,7 @@ const initialize = (passport) => {
                 return done(error);
             }
 
-            done(null, users);
+            done(null, dbuser);
         } catch (err) {
             console.error(`Deserialization Error: ${err.message}`);
             done(err, null);

@@ -6,19 +6,19 @@ const initialState = {
   error: null,
 };
 
-const signupSlice = createSlice({
-  name: 'signup',
+const signUpSlice = createSlice({
+  name: 'signUp',
   initialState,
   reducers: {
-    signupRequest: (state) => {
+    signUpRequest: (state) => {
       state.isLoading = true;
       state.error = null;
     },
-    signupSuccess: (state) => {
+    signUpSuccess: (state) => {
       state.isLoading = false;
       state.error = null;
     },
-    signupFailure: (state, action) => {
+    signUpFailure: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
       console.error('Signup failed with error:', action.payload); 
@@ -26,5 +26,5 @@ const signupSlice = createSlice({
   },
 });
 
-export const { signupRequest, signupSuccess, signupFailure } = signupSlice.actions;
-export const signupReducer = signupSlice.reducer;
+export const { signUpRequest, signUpSuccess, signUpFailure } = signUpSlice.actions;
+export const signUpReducer = signUpSlice.reducer;

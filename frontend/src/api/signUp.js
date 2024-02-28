@@ -1,23 +1,17 @@
 // frontend/src/api/signUp.js
+import axios from 'axios';
 import { HOST } from ".";
 
 export const registerUser = async (userData) => {
-  try {
-    const response = await fetch(`${HOST}/sign-in`, { 
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userData),
-    });
+    try {
+        const response = await axios.post(`${HOST}/sign-up`, userData, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message);
+        return response.data;
+    } catch (error) {
+        throw new Error(error.message);
     }
-
-    return await response.json();
-  } catch (error) {
-    throw new Error(error.message);
-  }
 };

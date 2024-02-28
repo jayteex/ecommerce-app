@@ -1,3 +1,4 @@
+// frontend/srd/utils/currencyLogic.js
 // Might not be used in the final app, we shall see
 export function calculatePrice(price, currency) {
   switch (currency) {

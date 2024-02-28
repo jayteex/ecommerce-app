@@ -1,3 +1,4 @@
+// frontend/src/api/index.js
 // Check if the environment variable is set to indicate local development
 const isLocalDevelopment = process.env.NODE_ENV === 'development';
 
