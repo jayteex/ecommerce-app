@@ -2,32 +2,37 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const supabase = require('../config/supabase'); // Import your Supabase configuration
 
 router.get('/', (req, res) => {
   const errorMessage = req.query.error ? encodeURIComponent(req.query.error) : '';
   res.send(`Login Page${errorMessage ? ` - Error: ${errorMessage}` : ''}`);
 });
 
-router.post('/', (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
-    if (err) {
-      console.error(`Login Error: ${err}`);
-      return res.redirect('/api/login?error=An error occurred during login.');
+router.post('/', passport.authenticate('local'), async (req, res) => {
+  try {
+    const { data: dbuser, error } = await supabase
+      .from('customers')
+      .select('customerid, email, firstname, lastname, city, address') 
+      .eq('customerid', req.user.customerid) // Retrieve user details using req.user.customerid
+      .single();
+
+    if (error) {
+      console.error(`Error fetching user details: ${error.message}`);
+      return res.status(500).json({ error: 'Internal Server Error' });
     }
-    if (!user) {
-      console.log(`Login Failed: ${info.message}`);
-      return res.redirect(`/api/login?error=${encodeURIComponent(info.message)}`);
+
+    // If user details are found, return the user object in the response
+    if (dbuser) {
+      return res.status(200).json(dbuser); 
+    } else {
+      console.log(`User not found with id: ${req.user.customerid}`);
+      return res.status(404).json({ error: 'User not found' });
     }
-    req.logIn(user, (err) => {
-      if (err) {
-        console.error(`Login Error during session creation: ${err}`);
-        return next(err);
-      }
-      console.log(`Login Successful: User ${req.user.email} logged in`);
-      return res.redirect('/home');
-    });
-  })(req, res, next);
+  } catch (err) {
+    console.error(`Authentication Error: ${err.message}`);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 module.exports = router;
-
