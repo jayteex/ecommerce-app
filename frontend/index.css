@@ -182,7 +182,7 @@ input.quantity {
 }
 
 .price {
-    color: var(--purple);
+    color: darkblue;
 }
 
 .add-to-cart-button {
@@ -222,7 +222,7 @@ input.quantity {
 }
 
 .total-value {
-    color: var(--purple);
+    color: darkblue;
     margin-left: auto;
 }
 

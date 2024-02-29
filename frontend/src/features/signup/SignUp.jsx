@@ -7,13 +7,13 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
-import { NavLink } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../../api/signUp.js';
 import { signUpRequest, signUpSuccess, signUpFailure } from './signUpSlice.js';
@@ -35,6 +35,7 @@ const defaultTheme = createTheme({
 export default function SignUp() {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     firstname: '',
@@ -54,7 +55,7 @@ export default function SignUp() {
       const response = await registerUser(formData);
       console.log('Response data:', response); // Log the response data
       dispatch(signUpSuccess());
-      // You can redirect the user or show a success message here
+      navigate('/sign-in');
     } catch (error) {
       console.error('Signup failed with error:', error.message);
       dispatch(signUpFailure(error.message));

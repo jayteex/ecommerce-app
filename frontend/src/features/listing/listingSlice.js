@@ -3,14 +3,24 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const listingSlice = createSlice({
   name: 'listing',
-  initialState: [],
+  initialState: {
+    products: [],
+    loading: false
+  },
   reducers: {
-    loadData(state, action) {
-      return action.payload; 
+    loadDataStart(state) {
+      state.loading = true;
+    },
+    loadDataSuccess(state, action) {
+      state.products = action.payload;
+      state.loading = false;
+    },
+    loadDataFailure(state) {
+      state.loading = false;
     }
   }
 });
 
-export const { loadData } = listingSlice.actions;
+export const { loadDataStart, loadDataSuccess, loadDataFailure } = listingSlice.actions;
 export const listingReducer = listingSlice.reducer;
 

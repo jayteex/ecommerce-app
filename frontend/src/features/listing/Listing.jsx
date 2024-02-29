@@ -1,47 +1,39 @@
 // frontend/src/features/listing/Listing.jsx
-// Listing.jsx
-
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { loadData } from './listingSlice';
+import { loadDataStart, loadDataSuccess, loadDataFailure } from './listingSlice';
 import { getProducts } from '../../api/products.js';
 import { calculatePrice, getCurrencySymbol } from '../../utils/currencyLogic';
 import { addItem } from '../cart/cartSlice';
 
 export default function Listing() {
   const dispatch = useDispatch();
-  const [isDataFetched, setIsDataFetched] = useState(false);
-  const [showLoading, setShowLoading] = useState(false);
+  const products = useSelector((state) => state.listing.products);
+  const loading = useSelector((state) => state.listing.loading);
   const currencyFilter = useSelector((state) => state.currencyFilter);
 
   useEffect(() => {
-    if (!isDataFetched) {
-      setShowLoading(true);
-      const fetchProducts = async () => {
-        try {
-          const products = await getProducts();
-          dispatch(loadData(products));
-          setIsDataFetched(true);
-          setShowLoading(false);
-        } catch (error) {
+    if (products.length === 0) {
+      dispatch(loadDataStart());
+      getProducts()
+        .then(products => {
+          dispatch(loadDataSuccess(products));
+        })
+        .catch(error => {
           console.error('Error fetching products:', error);
-          setShowLoading(false);
-        }
-      };
-      fetchProducts();
+          dispatch(loadDataFailure());
+        });
     }
-  }, [dispatch, isDataFetched]);
-
-  const products = useSelector((state) => state.listing);
+  }, [dispatch, products.length]);
 
   const onClickHandler = (product) => {
     dispatch(addItem(product));
   };
 
-  if (showLoading) {
+  if (loading) {
     return (
       <div className="loading-container">
-        <p>Due to the slowness of Render's and Supabase's free tier, fetching of assets on initial load might take 10-15 seconds (it might also require a reload).</p>
+        <p>Due to the slowness of Render's and Supabase's free tier, fetching of assets on initial load might take 10-15 seconds.</p>
         <p>After MVP is finished I will see if I can boost performance. Once the app has loaded, though, it is very fast.</p>
         <p>Sorry for the inconvenience, I hope you have a nice day!</p>
         <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmExdWxtbmR0NjJlZWZqc3cwODhpcmRwbnVwbnUxcmF6M2U5dXVpOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/DhstvI3zZ598Nb1rFf/giphy.gif" alt="Loading" />
@@ -74,5 +66,6 @@ export default function Listing() {
     </ul>
   );
 };
+
 
 
