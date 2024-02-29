@@ -1,3 +1,4 @@
+// frontend/src/features/currencyFilter/currencyFilterSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialCurrencyFilter = 'USD';
@@ -13,4 +14,4 @@ const currencyFilterSlice = createSlice({
 });
 
 export const { setCurrency } = currencyFilterSlice.actions;
-export const currencyFilterReducer = currencyFilterSlice.reducer; 
+export const currencyFilterReducer = currencyFilterSlice.reducer;

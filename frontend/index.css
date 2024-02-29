@@ -233,3 +233,7 @@ input.quantity {
     width: 50px;
     padding: 2px 4px;
 }
+
+footer {
+    text-align: center;
+}

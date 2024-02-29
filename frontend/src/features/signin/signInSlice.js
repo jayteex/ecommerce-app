@@ -1,8 +1,8 @@
-// frontend/src/features/login/signInSlice.js
+// frontend/src/features/signin/signInSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  user: null,
+  user: JSON.parse(localStorage.getItem('user')) || null, // Initialize user from localStorage
   isLoading: false,
   error: null,
 };
@@ -27,5 +27,6 @@ const signInSlice = createSlice({
 });
 
 export const { signInRequest, signInSuccess, signInFailure } = signInSlice.actions;
+export const selectUser = (state) => state.signIn.user; // Selector to access user state
 export const signInReducer = signInSlice.reducer;
 

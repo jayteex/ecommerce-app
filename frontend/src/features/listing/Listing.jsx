@@ -1,4 +1,6 @@
 // frontend/src/features/listing/Listing.jsx
+// Listing.jsx
+
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadData } from './listingSlice';
@@ -6,10 +8,11 @@ import { getProducts } from '../../api/products.js';
 import { calculatePrice, getCurrencySymbol } from '../../utils/currencyLogic';
 import { addItem } from '../cart/cartSlice';
 
-export const Listing = ({ currencyFilter }) => {
+export default function Listing() {
   const dispatch = useDispatch();
   const [isDataFetched, setIsDataFetched] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
+  const currencyFilter = useSelector((state) => state.currencyFilter);
 
   useEffect(() => {
     if (!isDataFetched) {
@@ -38,7 +41,7 @@ export const Listing = ({ currencyFilter }) => {
   if (showLoading) {
     return (
       <div className="loading-container">
-        <p>Due to the slowness of Render's free tier, fetching of assets on initial load might take 5-10 seconds.</p>
+        <p>Due to the slowness of Render's free tier, fetching of assets on initial load might take 5-10 seconds (it might also require a reload).</p>
         <p>Sorry for the inconvenience, I hope you have a nice day!</p>
         <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmExdWxtbmR0NjJlZWZqc3cwODhpcmRwbnVwbnUxcmF6M2U5dXVpOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/DhstvI3zZ598Nb1rFf/giphy.gif" alt="Loading" />
       </div>
@@ -57,7 +60,7 @@ export const Listing = ({ currencyFilter }) => {
           <h3>{product.name}</h3>
           <h3 className="price">
             {getCurrencySymbol(currencyFilter)}
-            {calculatePrice(product.price, currencyFilter).toFixed(2)} {currencyFilter}
+            {calculatePrice(product.price, currencyFilter).toFixed(2)}
           </h3>
           <button
             onClick={() => onClickHandler(product)}
@@ -70,4 +73,5 @@ export const Listing = ({ currencyFilter }) => {
     </ul>
   );
 };
+
 

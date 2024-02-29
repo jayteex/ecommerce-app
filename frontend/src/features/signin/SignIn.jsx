@@ -1,4 +1,4 @@
-// frontend/src/features/login/SignIn.jsx
+// frontend/src/features/signin/SignIn.jsx
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Avatar from '@mui/material/Avatar';
@@ -45,8 +45,13 @@ export default function SignIn() {
     try {
       const userData = { email, password };
       const response = await signInUserApi(userData);
+      
+      // Store the response object directly in localStorage
+      localStorage.setItem('user', JSON.stringify(response));
+      
+      // Dispatch the response object directly to the Redux store
       dispatch(signInSuccess(response));
-
+      
       navigate('/home');
     } catch (error) {
       dispatch(signInFailure(error.message));

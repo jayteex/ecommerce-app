@@ -1,10 +1,12 @@
+// frontend/src/features/currencyFilter/currencyFilter.jsx
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCurrency } from './currencyFilterSlice';
 import { currenciesData } from './mockData';
 
-export const CurrencyFilter = ({ currencyFilter }) => {
+export default function CurrencyFilter() {
   const dispatch = useDispatch();
+  const currencyFilter = useSelector((state) => state.currencyFilter);
 
   const onClickHandler = (currency) => {
     dispatch(setCurrency(currency));
@@ -29,3 +31,4 @@ export const CurrencyFilter = ({ currencyFilter }) => {
     );
   }
 };
+

@@ -1,11 +1,11 @@
-// frontend/srd/utils/currencyLogic.js
+// frontend/src/utils/currencyLogic.js
 // Might not be used in the final app, we shall see
 export function calculatePrice(price, currency) {
-  switch (currency) {
+  switch (currency.toUpperCase()) {
     case 'EUR':
-      return price * 0.86;
+      return price * 0.92; // Updated Euro rate
     case 'CAD':
-      return price * 1.33;
+      return price * 1.36; // Updated Canadian Dollar rate
     default:
       return price;
   }

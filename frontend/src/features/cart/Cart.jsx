@@ -1,14 +1,11 @@
+// frontend/src/features/cart/Cart.jsx
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  calculateTotal,
-  getCurrencySymbol,
-} from '../../utils/currencyLogic';
+import { calculateTotal, getCurrencySymbol } from '../../utils/currencyLogic';
 import { changeItemQuantity } from './cartSlice.js';
 
-// Might have to relocate Cart somewhere else 
-export const Cart = () => {
-  const dispatch = useDispatch(); 
+export default function Cart() {
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const currencyFilter = useSelector((state) => state.currencyFilter);
 
@@ -17,7 +14,7 @@ export const Cart = () => {
       return;
     }
     const newQuantity = Number(input);
-    dispatch(changeItemQuantity({ name, newQuantity })); 
+    dispatch(changeItemQuantity({ name, newQuantity }));
   };
 
   const cartElements = cart ? Object.keys(cart).map(createCartItem) : null;
@@ -30,7 +27,7 @@ export const Cart = () => {
         Total{' '}
         <span className="total-value">
           {getCurrencySymbol(currencyFilter)}
-          {total} {currencyFilter}
+          {total}
         </span>
       </h3>
     </div>
@@ -63,3 +60,5 @@ export const Cart = () => {
     );
   }
 };
+
+

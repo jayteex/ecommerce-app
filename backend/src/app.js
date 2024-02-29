@@ -16,8 +16,8 @@ app.use((req, res, next) => {
 // Session
 app.use(session({
   secret: process.env.SESSION_SECRET, 
-  resave: false, 
-  saveUninitialized: false, 
+  resave: true, 
+  saveUninitialized: true, 
   cookie: {
     httpOnly: true, 
     secure: process.env.NODE_ENV === "production", 
