@@ -41,7 +41,8 @@ export default function Listing() {
   if (showLoading) {
     return (
       <div className="loading-container">
-        <p>Due to the slowness of Render's free tier, fetching of assets on initial load might take 5-10 seconds (it might also require a reload).</p>
+        <p>Due to the slowness of Render's and Supabase's free tier, fetching of assets on initial load might take 10-15 seconds (it might also require a reload).</p>
+        <p>After MVP is finished I will see if I can boost performance. Once the app has loaded, though, it is very fast.</p>
         <p>Sorry for the inconvenience, I hope you have a nice day!</p>
         <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmExdWxtbmR0NjJlZWZqc3cwODhpcmRwbnVwbnUxcmF6M2U5dXVpOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/DhstvI3zZ598Nb1rFf/giphy.gif" alt="Loading" />
       </div>

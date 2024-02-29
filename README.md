@@ -55,6 +55,8 @@ ATTENTION: THIS WILL NEVER BE A "REAL" STORE. For fun and portfolio purposes onl
 - Advanced cart 
 - Checkout process
   - Mock payment integration
+- Increase speed & performance, if possible
+  - (free tiers of Render & Supabase are quite slow, especially on initial load)
 - Bonus
   - OAuth login via GitHub, Google etc.
 
