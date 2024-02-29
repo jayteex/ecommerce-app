@@ -30,6 +30,7 @@ export default function Listing() {
     dispatch(addItem(product));
   };
 
+  // Some text and GIF to appease long waiting time after databases were inactive for a while
   if (loading) {
     return (
       <div className="loading-container">

@@ -18,6 +18,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { signInUserApi } from '../../api/signIn';
 import { signInRequest, signInSuccess, signInFailure } from './signInSlice';
 
+// Some issues with index.css persist
 const defaultTheme = createTheme({
   palette: {
     primary: {

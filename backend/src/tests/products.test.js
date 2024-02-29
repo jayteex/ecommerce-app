@@ -10,7 +10,7 @@ describe('Products Route', () => {
   });
 
   it('responds with JSON containing a single product by ID', async () => {
-    const response = await request(app).get('/home/10005'); // Assuming product ID 1 exists
+    const response = await request(app).get('/home/10005'); // Assuming product ID 10005 exists
     expect(response.status).toBe(200);
     expect(response.type).toBe('application/json');
     expect(response.body).toEqual(expect.any(Object)); // Expecting a single product object

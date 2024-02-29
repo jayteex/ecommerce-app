@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../../api/signUp.js';
 import { signUpRequest, signUpSuccess, signUpFailure } from './signUpSlice.js';
 
+// Some issues with index.css persist
 const defaultTheme = createTheme({
   palette: {
     primary: {

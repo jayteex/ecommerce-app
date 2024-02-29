@@ -3,9 +3,9 @@
 export function calculatePrice(price, currency) {
   switch (currency.toUpperCase()) {
     case 'EUR':
-      return price * 0.92; // Updated Euro rate
+      return price * 0.92; 
     case 'CAD':
-      return price * 1.36; // Updated Canadian Dollar rate
+      return price * 1.36; 
     default:
       return price;
   }

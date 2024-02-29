@@ -1,3 +1,4 @@
+// frontend/src/features/search/searchSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = '';
