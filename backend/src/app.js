@@ -16,8 +16,8 @@ app.use((req, res, next) => {
 // Session
 app.use(session({
   secret: process.env.SESSION_SECRET, 
-  resave: true, // Don't save session if unmodified
-  saveUninitialized: true, // Don't create session until something stored
+  resave: false, 
+  saveUninitialized: false, 
   cookie: {
     httpOnly: true, 
     secure: process.env.NODE_ENV === "production", 
@@ -79,14 +79,3 @@ if (require.main === module) {
 }
 
 module.exports = app;
-
-
-
-/*
-app.use('/login', require('./routes/login.js'));
-app.use('/users', require('./routes/users.js'));
-app.use('/cart', require('./routes/cart.js'));
-app.use('/checkout', require('./routes/checkout.js'));
-app.use('/orders', require('./routes/orders.js'));
-
-*/
