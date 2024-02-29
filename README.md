@@ -53,6 +53,7 @@ ATTENTION: THIS WILL NEVER BE A "REAL" STORE. For fun and portfolio purposes onl
   - User info
   - Order History
 - Advanced cart 
+- Search
 - Checkout process
   - Mock payment integration
 - Footer
