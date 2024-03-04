@@ -8,8 +8,10 @@ import SignIn from './features/signin/SignIn';
 import Listing  from './features/listing/Listing';
 import Cart from './features/cart/Cart';
 import Search from './features/search/Search';
-import Account from './features/account/Account'
+import Account from './features/account/Account';
+import Logout from './features/navigation/Logout';
 import  CurrencyFilter from './features/currencyFilter/CurrencyFilter';
+
 
 // A wrapper that combines some components, so that they can be used in the Router below
 function ListingWrapper() {
@@ -28,10 +30,12 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<Root />}>
       <Route index element={<Navigate to="/home" replace />} />
       <Route path="home" element={<ListingWrapper />} />
+      <Route path="home/loggedout" element={<ListingWrapper />} />
       <Route path="about" element={<About />} />
       <Route path="sign-up" element={<SignUp />} />
       <Route path="sign-in" element={<SignIn />} />
       <Route path="account" element={<Account />} />
+      <Route path="logout" element={<Logout />} />
     </Route>
 
 )

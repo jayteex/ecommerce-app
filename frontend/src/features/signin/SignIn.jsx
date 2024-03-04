@@ -17,6 +17,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { signInUserApi } from '../../api/signIn';
 import { signInRequest, signInSuccess, signInFailure } from './signInSlice';
+import { saveUserDataToLocalStorage } from '../../utils/localStorageUtil';
 
 // Some issues with index.css persist
 const defaultTheme = createTheme({
@@ -47,8 +48,8 @@ export default function SignIn() {
       const userData = { email, password };
       const response = await signInUserApi(userData);
       
-      // Store the response object directly in localStorage
-      localStorage.setItem('user', JSON.stringify(response));
+      // Imported from utils
+      saveUserDataToLocalStorage(response);
       
       // Dispatch the response object directly to the Redux store
       dispatch(signInSuccess(response));

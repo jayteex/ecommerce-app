@@ -6,7 +6,7 @@ This is a PERN application, with a Postgres database, Node/Express backend, and 
 
 Work in progress. See commits/code for details. 
 
-Application is under active development and usually gets at least 1 commit per weekday. Finish date set for early/mid March. 
+Application is under active development and usually gets at least 1 commit per weekday. Finish date set for mid March. 
 
 ## How to use
 
@@ -44,10 +44,10 @@ ATTENTION: THIS WILL NEVER BE A "REAL" STORE. For fun and portfolio purposes onl
 - Sign up and login process
   - Persistent user authentication across page reloads
   - Conditional Rendering
+- Logout process
 
 ## TODO
 
-- Logout process
 - Product Detail Pages (PDP)
 - Account page
   - User info

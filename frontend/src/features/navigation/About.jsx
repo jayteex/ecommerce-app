@@ -3,10 +3,8 @@ import React from "react";
 
 export default function About() {
   return (
-    <main>
-      <p>
-        Insert About text here
-      </p>
-    </main>
+    <>
+      <h1>About page</h1>
+    </>
   );
 }
