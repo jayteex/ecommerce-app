@@ -1,8 +1,24 @@
+// backend/src/routes/protectedRoute.js
 const express = require('express');
-const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 const { supabase } = require('../config/supabase');
+const authMiddleware = require('../config/auth');
+
+const router = express.Router();
+
+// Apply authentication middleware to this route
+router.use(authMiddleware);
+
+router.get('/', (req, res) => {
+  // Access user information from req.user
+  // You can use req.user to retrieve user-specific data or perform operations
+  res.json({ message: 'You have accessed the account route.', user: req.user });
+});
+
+module.exports = router;
+
+/*
 
 // GET a single user by ID
 router.get('/:userId', async (req, res) => {
@@ -90,3 +106,5 @@ router.put('/:userId', [
 });
 
 module.exports = router;
+
+*/

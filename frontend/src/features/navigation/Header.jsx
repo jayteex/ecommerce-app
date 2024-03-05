@@ -14,7 +14,7 @@ export default function Header () {
       {!user && <NavLink to="/sign-in">Login</NavLink>}
       {user && <NavLink to="/account">Account</NavLink>}
       <NavLink to="/about">About</NavLink>
-      {user && <NavLink to="/logout" ><i title="Logout" class="fa-solid fa-right-from-bracket"></i></NavLink>}
+      {user && <NavLink to="/logout" ><i title="Logout" className="fa-solid fa-right-from-bracket"></i></NavLink>}
     </div>
   )
 }

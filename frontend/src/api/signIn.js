@@ -8,6 +8,7 @@ export const signInUserApi = async (userData) => {
       headers: {
         'Content-Type': 'application/json',
       },
+      withCredentials: true, // Include cookies in requests
     });
     return response.data;
     
@@ -15,5 +16,6 @@ export const signInUserApi = async (userData) => {
     throw new Error(error.message);
   }
 };
+
 
 

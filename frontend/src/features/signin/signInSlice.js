@@ -1,8 +1,9 @@
 // frontend/src/features/signin/signInSlice.js
 import { createSlice } from '@reduxjs/toolkit';
+import { fetchSessionData } from '../../api/getSession';
 
 const initialState = {
-  user: JSON.parse(localStorage.getItem('user')) || null, // Initialize user from localStorage
+  user: null,
   isLoading: false,
   error: null,
 };
@@ -26,7 +27,16 @@ const signInSlice = createSlice({
   },
 });
 
-export const { signInRequest, signInSuccess, signInFailure } = signInSlice.actions;
-export const selectUser = (state) => state.signIn.user; // Selector to access user state
-export const signInReducer = signInSlice.reducer;
+export const fetchSessionDataAndUpdateStore = () => async (dispatch) => {
+  try {
+    dispatch(signInRequest());
+    const response = await fetchSessionData();
+    dispatch(signInSuccess(response));
+  } catch (error) {
+    dispatch(signInFailure(error.message));
+  }
+};
 
+export const { signInRequest, signInSuccess, signInFailure } = signInSlice.actions;
+export const selectUser = (state) => state.signIn.user;
+export const signInReducer = signInSlice.reducer;

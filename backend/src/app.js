@@ -16,8 +16,8 @@ app.use((req, res, next) => {
 // Session
 app.use(session({
   secret: process.env.SESSION_SECRET, 
-  resave: true, 
-  saveUninitialized: true, 
+  resave: false, 
+  saveUninitialized: false, 
   cookie: {
     httpOnly: true, 
     secure: process.env.NODE_ENV === "production", 
@@ -32,16 +32,16 @@ initializePassport(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Redirect root URL to "/home"
-app.get('/', (req, res) => {
-  res.redirect('/home');
-});
-
 // Use CORS
 app.use(cors({
   origin: ['http://localhost:5173', 'https://ecommerce-app-frontend-d845.onrender.com', 'https://pixabay.com'],
   credentials: true
 }));
+
+// Redirect root URL to "/home"
+app.get('/', (req, res) => {
+  res.redirect('/home');
+});
 
 // Images for products
 app.use('/images', express.static(path.join(__dirname, 'images')));
@@ -67,8 +67,11 @@ app.use((error, req, res, next) => {
 
 // Route setup
 app.use('/home', require('./routes/products.js'));
-app.use('/sign-up', require('./routes/register.js')); // Adjusted route to '/sign-up'
+app.use('/sign-up', require('./routes/register.js')); 
 app.use('/sign-in', require('./routes/login.js'));
+app.use('/logout', require('./routes/logout.js'));
+app.use('/api-session', require('./routes/session.js'));
+app.use('/session-test', require('./routes/session-test.js'));
 
 // Listener (Only start server if this file is being executed directly)
 if (require.main === module) {
