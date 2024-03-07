@@ -44,6 +44,7 @@ export default function SignUp() {
     email: '',
     password: '',
     address: '',
+    city: ''
   });
 
   const isLoading = useSelector((state) => state.signUp.isLoading);
@@ -145,6 +146,17 @@ export default function SignUp() {
                   label="Address"
                   id="address"
                   autoComplete="address"
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="city"
+                  label="City"
+                  id="city"
+                  autoComplete="city"
                   onChange={handleInputChange}
                 />
               </Grid>

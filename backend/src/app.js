@@ -72,6 +72,7 @@ app.use('/sign-in', require('./routes/login.js'));
 app.use('/logout', require('./routes/logout.js'));
 app.use('/api-session', require('./routes/session.js'));
 app.use('/session-test', require('./routes/session-test.js'));
+app.use('/update-account', require('./routes/account.js'));
 
 // Listener (Only start server if this file is being executed directly)
 if (require.main === module) {

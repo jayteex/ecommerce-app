@@ -1,0 +1,24 @@
+/* frontend/src/features/account/Account.css */
+.account-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 600px; /* Adjust the width as needed */
+    margin: 0 auto;
+}
+
+.account-field {
+    width: 500px; /* Adjust width accounting for margin */
+    margin-bottom: 20px; /* Adjust spacing between fields */
+}
+
+.account-value {
+    color: #333; /* Adjust the color to make values darker */
+}
+
+.account-button {
+    margin-top: 20px; /* Adjust spacing between fields and button */
+}
+
+
+

@@ -11,6 +11,7 @@ router.post('/',
   body('firstname').notEmpty().withMessage('First name is required'),
   body('lastname').notEmpty().withMessage('Last name is required'),
   body('address').notEmpty().withMessage('Address is required'),
+  body('city').notEmpty().withMessage('City is required'),
   async (req, res) => {
     // Check for validation errors
     const errors = validationResult(req);
@@ -19,7 +20,7 @@ router.post('/',
     }
 
     try {
-      const { firstname, lastname, email, password, address } = req.body;
+      const { firstname, lastname, email, password, address, city } = req.body;
 
       // Hash password
       const saltRounds = 10;
@@ -43,7 +44,7 @@ router.post('/',
       // Insert new customer into database with calculated customerid
       const { data: insertedCustomer, error: insertError } = await supabase
         .from('customers')
-        .insert([{ customerid: newCustomerId, firstname, lastname, email, password: hashedPassword, address }]);
+        .insert([{ customerid: newCustomerId, firstname, lastname, email, password: hashedPassword, address, city }]);
 
       if (insertError) {
         console.error('Error inserting new customer:', insertError.message);

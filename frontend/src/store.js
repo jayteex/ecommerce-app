@@ -6,6 +6,7 @@ import { currencyFilterReducer } from './features/currencyFilter/currencyFilterS
 import { searchReducer } from './features/search/searchSlice.js'; 
 import { signUpReducer } from './features/signup/signUpSlice.js';
 import { signInReducer } from './features/signin/signInSlice.js';
+import { accountReducer } from './features/account/accountSlice.js';
 
 
 const rootReducer = combineReducers({
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   search: searchReducer, 
   signUp: signUpReducer,
   signIn: signInReducer,
+  account: accountReducer
 });
 
 export const store = configureStore({
