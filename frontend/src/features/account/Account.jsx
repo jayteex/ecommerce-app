@@ -32,6 +32,7 @@ export default function Account() {
                 // Call API to update account
                 await updateAccount(editedUser);
                 dispatch(updateUserSuccess(editedUser));
+                window.location.reload();
             } catch (error) {
                 dispatch(updateUserFailure(error.message));
             }
