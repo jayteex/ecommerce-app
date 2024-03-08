@@ -18,6 +18,7 @@ router.get('/', (req, res) => {
 
 module.exports = router;
 
+
 /*
 
 // GET a single user by ID

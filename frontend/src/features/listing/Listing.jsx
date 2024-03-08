@@ -1,6 +1,7 @@
 // frontend/src/features/listing/Listing.jsx
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { loadDataStart, loadDataSuccess, loadDataFailure } from './listingSlice';
 import { getProducts } from '../../api/products.js';
 import { calculatePrice, getCurrencySymbol } from '../../utils/currencyLogic';
@@ -50,12 +51,15 @@ export default function Listing() {
     <ul id="inventory-container">
       {products.map((product) => (
         <li key={product.productid} className="item">
-          <img src={product.image_url} alt={product.name} />
-          <h3>{product.name}</h3>
-          <h3 className="price">
-            {getCurrencySymbol(currencyFilter)}
-            {calculatePrice(product.price, currencyFilter).toFixed(2)}
-          </h3>
+          {/* Wrap each product item with Link */}
+          <Link to={`/product/${product.productid}`}>
+            <img src={product.image_url} alt={product.name} />
+            <h3>{product.name}</h3>
+            <h3 className="price">
+              {getCurrencySymbol(currencyFilter)}
+              {calculatePrice(product.price, currencyFilter).toFixed(2)}
+            </h3>
+          </Link>
           <button
             onClick={() => onClickHandler(product)}
             className="add-to-cart-button"

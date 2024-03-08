@@ -11,6 +11,7 @@ import Search from './features/search/Search';
 import Account from './features/account/Account';
 import Logout from './features/navigation/Logout';
 import CurrencyFilter from './features/currencyFilter/CurrencyFilter';
+import ProductDetails from './features/details/ProductDetails';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchSessionDataAndUpdateStore } from './features/signin/signInSlice'; // Import the thunk action
@@ -42,6 +43,7 @@ export const App = () => {
         <Route path="/" element={<Root />}>
           <Route index element={<Navigate to="/home" replace />} />
           <Route path="home" element={<ListingWrapper />} />
+          <Route path="product/:productId" element={<ProductDetails/>} />
           <Route path="about" element={<About />} />
           <Route path="sign-up" element={<SignUp />} />
           <Route path="sign-in" element={<SignIn />} />
