@@ -1,4 +1,7 @@
 // frontend/src/utils/localStorageUtil.js
+
+// DEPRECATED SINCE SWITCH TO PASSPORT.js LOGIC
+/*
 const saveUserDataToLocalStorage = (userData) => {
     localStorage.setItem('user', JSON.stringify(userData));
 
@@ -9,4 +12,4 @@ const saveUserDataToLocalStorage = (userData) => {
   };
   
   export { saveUserDataToLocalStorage };
-  
+  */

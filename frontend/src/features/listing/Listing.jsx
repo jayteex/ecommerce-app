@@ -6,6 +6,7 @@ import { loadDataStart, loadDataSuccess, loadDataFailure } from './listingSlice'
 import { getProducts } from '../../api/products.js';
 import { calculatePrice, getCurrencySymbol } from '../../utils/currencyLogic';
 import { addItem } from '../cart/cartSlice';
+import "./Listing.css";
 
 export default function Listing() {
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ export default function Listing() {
         <p>Due to the slowness of Render's and Supabase's free tier, fetching of assets on initial load might take 10-20 seconds.</p>
         <p>After MVP is finished I will see if I can boost performance. Once the app has loaded, though, it is very fast.</p>
         <p>Sorry for the inconvenience, I hope you have a nice day!</p>
-        <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcXc4YTBiZnltcDJiaHVic2premprbnBldm4xZ2tlOHI2OTFxanVkMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TvLuZ00OIADoQ/giphy.gif" alt="Loading" />
+        <img className="loadingGIF" src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcXc4YTBiZnltcDJiaHVic2premprbnBldm4xZ2tlOHI2OTFxanVkMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TvLuZ00OIADoQ/giphy.gif" alt="Loading" />
       </div>
     );
   }
@@ -54,8 +55,8 @@ export default function Listing() {
           {/* Wrap each product item with Link */}
           <Link to={`/product/${product.productid}`}>
             <img src={product.image_url} alt={product.name} />
-            <h3>{product.name}</h3>
-            <h3 className="price">
+            <h3 className="product-name">{product.name}</h3>
+            <h3 className="product-price">
               {getCurrencySymbol(currencyFilter)}
               {calculatePrice(product.price, currencyFilter).toFixed(2)}
             </h3>

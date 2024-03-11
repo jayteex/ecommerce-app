@@ -1,6 +1,5 @@
 // frontend/src/App.jsx
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import "../index.css";
 import Root from './features/navigation/Root';
 import About from './features/navigation/About';
 import SignUp from './features/signup/SignUp';
@@ -12,9 +11,11 @@ import Account from './features/account/Account';
 import Logout from './features/navigation/Logout';
 import CurrencyFilter from './features/currencyFilter/CurrencyFilter';
 import ProductDetails from './features/details/ProductDetails';
+import OcCart from './features/cart/OcCart';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchSessionDataAndUpdateStore } from './features/signin/signInSlice'; // Import the thunk action
+import { fetchSessionDataAndUpdateStore } from './features/signin/signInSlice'; 
+
 
 // A wrapper that combines some components, so that they can be used in the Router below
 function ListingWrapper() {
@@ -23,7 +24,7 @@ function ListingWrapper() {
       <CurrencyFilter />
       <Search />
       <Listing />
-      <Cart />
+      {/*<Cart />*/}
     </>
   );
 }

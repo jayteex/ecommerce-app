@@ -2,6 +2,7 @@
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUser } from "../signin/signInSlice.js"
+import OcCart from "../cart/OcCart.jsx";
 
 export default function Header () {
   
@@ -15,6 +16,7 @@ export default function Header () {
       {user && <NavLink to="/account">Account</NavLink>}
       <NavLink to="/about">About</NavLink>
       {user && <NavLink to="/logout" ><i title="Logout" className="fa-solid fa-right-from-bracket"></i></NavLink>}
+      <OcCart />
     </div>
   )
 }
