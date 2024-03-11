@@ -6,6 +6,8 @@ const morgan = require('morgan');
 const path = require('path');
 const session = require('express-session');
 const cors = require('cors');
+const RedisStore = require('connect-redis')(session);
+const redis = require('redis');
 
 // Middleware to set Content-Type header for JSON responses
 app.use((req, res, next) => {
@@ -13,17 +15,29 @@ app.use((req, res, next) => {
   next();
 });
 
-// Session configuration
-if (process.env.NODE_ENV === 'production') {
-  // Use Redis session store in production
-  const RedisStore = require('connect-redis')(session);
-  const redis = require('redis');
-// Create Redis client
 const redisClient = redis.createClient({
   host: process.env.REDIS_HOST,
   port: process.env.REDIS_PORT,
 });
 
+// Function to connect to Redis (can be reused)
+const connectToRedis = async () => {
+  try {
+    await redisClient.connect();
+    console.log('Connected to Redis');
+  } catch (error) {
+    console.error('Error connecting to Redis:', error);
+    // Implement error handling strategy (e.g., retry logic, fallback)
+  }
+};
+
+// Connect to Redis on server startup
+
+
+// Session configuration
+if (process.env.NODE_ENV === 'production') {
+  connectToRedis();
+  // Use Redis when in production
   app.use(session({
     store: new RedisStore({ client: redisClient }),
     secret: process.env.SESSION_SECRET,
@@ -31,7 +45,7 @@ const redisClient = redis.createClient({
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: true, 
+      secure: true,
       maxAge: 24 * 60 * 60 * 1000
     }
   }));
@@ -89,7 +103,7 @@ app.use((error, req, res, next) => {
   next();
 });
 
-// Route setup
+// Route setup (consider moving Redis interaction logic inside routes)
 app.use('/home', require('./routes/products.js'));
 app.use('/sign-up', require('./routes/register.js')); 
 app.use('/sign-in', require('./routes/login.js'));
