@@ -15,6 +15,13 @@ app.use((req, res, next) => {
   next();
 });
 
+// Passport
+const passport = require('passport');
+const initializePassport = require('./config/passportConfig.js');
+initializePassport(passport);
+app.use(passport.initialize());
+app.use(passport.session());
+
 const redisClient = redis.createClient({
   host: process.env.REDIS_HOST,
   port: process.env.REDIS_PORT,
@@ -59,13 +66,6 @@ if (process.env.NODE_ENV === 'production') {
     }
   }));
 }
-
-// Passport
-const passport = require('passport');
-const initializePassport = require('./config/passportConfig.js');
-initializePassport(passport);
-app.use(passport.initialize());
-app.use(passport.session());
 
 // Use CORS
 app.use(cors({
