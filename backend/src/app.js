@@ -13,17 +13,41 @@ app.use((req, res, next) => {
   next();
 });
 
-// Session
-app.use(session({
-  secret: process.env.SESSION_SECRET, 
-  resave: false, 
-  saveUninitialized: false, 
-  cookie: {
-    httpOnly: true, 
-    secure: process.env.NODE_ENV === "production", 
-    maxAge: 24 * 60 * 60 * 1000, 
-  }
-}));
+// Session configuration
+if (process.env.NODE_ENV === 'production') {
+  // Use Redis session store in production env
+  const RedisStore = require('connect-redis')(session);
+  const redis = require('redis');
+// Create Redis client
+const redisClient = redis.createClient({
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT,
+});
+
+  app.use(session({
+    store: new RedisStore({ client: redisClient }),
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: true, 
+      maxAge: 24 * 60 * 60 * 1000
+    }
+  }));
+} else {
+  // Use in-memory session store for local development
+  app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: false, 
+      maxAge: 24 * 60 * 60 * 1000
+    }
+  }));
+}
 
 // Passport
 const passport = require('passport');
