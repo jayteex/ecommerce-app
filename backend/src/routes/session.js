@@ -4,10 +4,12 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
   try {
-    if (!req.session.passport.user) {
+    // Check if session and passport properties exist
+    if (!req.session || !req.session.passport || !req.session.passport.user) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
-    console.log("This is the passport.user", req.user)
+    // Access authenticated user from req.user (provided by Passport.js)
+    console.log("This is the authenticated user:", req.user);
     res.status(200).json(req.user);
   } catch (error) {
     console.error(`Error fetching session data: ${error.message}`);
@@ -16,3 +18,4 @@ router.get('/', (req, res) => {
 });
 
 module.exports = router;
+

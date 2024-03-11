@@ -31,9 +31,6 @@ const connectToRedis = async () => {
   }
 };
 
-// Connect to Redis on server startup
-
-
 // Session configuration
 if (process.env.NODE_ENV === 'production') {
   connectToRedis();
