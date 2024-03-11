@@ -1,5 +1,4 @@
 // backend/src/config/redisUtils.js
-const { serializeUser, deserializeUser } = require('redis');
 const redis = require('redis');
 const redisClient = redis.createClient();
 
@@ -23,3 +22,4 @@ function deserializeUser(id, done) {
 }
 
 module.exports = { serializeUser, deserializeUser };
+
