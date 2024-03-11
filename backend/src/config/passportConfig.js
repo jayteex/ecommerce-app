@@ -32,9 +32,16 @@ const initialize = (passport) => {
     }
   }));
 
+// Serialize user object based on environment
+if (process.env.NODE_ENV === 'production') {
+  const { serializeUser, deserializeUser } = require('./redisUtils');
+  passport.serializeUser(serializeUser);
+  passport.deserializeUser(deserializeUser);
+} else {
+  // Use default serialization for local environment
   passport.serializeUser((user, done) => {
     console.log('Serialized User:', user);
-    done(null, user.customerid); // Serialize with user id
+    done(null, user.customerid);
   });
 
   passport.deserializeUser(async (id, done) => {
@@ -47,18 +54,17 @@ const initialize = (passport) => {
 
       if (error) throw error;
 
-      if (!user) {
-        console.log(`Deserialization Failed: No user found with id ${id}`);
-        return done(null, false);
-      }
+      if (!user) return done(null, false);
 
       console.log('Deserialized User:', user);
-      done(null, user); // Deserialize with user object
+      done(null, user);
     } catch (err) {
       console.error(`Deserialization Error: ${err.message}`);
       done(err);
     }
   });
+}
+
 };
 
 module.exports = initialize;
