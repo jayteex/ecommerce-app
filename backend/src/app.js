@@ -16,7 +16,7 @@ app.use((req, res, next) => {
 // Session configuration
 if (process.env.NODE_ENV === 'production') {
   // Use Redis session store in production
-  const RedisStore = require('connect-redis');
+  const RedisStore = require('connect-redis')(session);
   const redis = require('redis');
 // Create Redis client
 const redisClient = redis.createClient({
