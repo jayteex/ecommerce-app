@@ -18,7 +18,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { signInUserApi } from '../../api/signIn';
 import { signInRequest, signInSuccess, signInFailure } from './signInSlice';
 
-// Some issues with index.css persist
+// Some issues with CSS persist, now that I have my own style, MUI, and Bootstrap
 const defaultTheme = createTheme({
   palette: {
     primary: {
@@ -40,6 +40,7 @@ export default function SignIn() {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
+  // Calling frontend API function
   const handleSubmit = async (event) => {
     event.preventDefault();
     dispatch(signInRequest());

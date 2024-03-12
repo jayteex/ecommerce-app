@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../../api/signUp.js';
 import { signUpRequest, signUpSuccess, signUpFailure } from './signUpSlice.js';
 
-// Some issues with index.css persist
+// Some issues with CSS persist, now that I have my own style, MUI, and Bootstrap
 const defaultTheme = createTheme({
   palette: {
     primary: {
@@ -50,12 +50,13 @@ export default function SignUp() {
   const isLoading = useSelector((state) => state.signUp.isLoading);
   const error = useSelector((state) => state.signUp.error);
 
+  // Calls backend via frontend API function
   const handleSubmit = async (event) => {
     event.preventDefault();
     dispatch(signUpRequest());
     try {
       const response = await registerUser(formData);
-      console.log('Response data:', response); // Log the response data
+      console.log('Response data:', response); 
       dispatch(signUpSuccess());
       navigate('/sign-in');
     } catch (error) {
@@ -71,6 +72,7 @@ export default function SignUp() {
     });
   };
 
+  // Updated MUI component
   return (
     <ThemeProvider theme={defaultTheme}>
 

@@ -1,5 +1,7 @@
 import { loadData, listingReducer } from '../features/listing/listingSlice.js';
 
+// Test might not be up to date anymore
+
 describe('listingSlice', () => {
   test('loadData action creator creates correct action', () => {
     const products = [{ id: 1, name: 'Product 1' }, { id: 2, name: 'Product 2' }];

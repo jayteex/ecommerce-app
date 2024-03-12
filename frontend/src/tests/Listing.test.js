@@ -1,11 +1,11 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react'; // Importing screen and fireEvent
+import { render, screen, fireEvent } from '@testing-library/react'; 
 import { Provider } from 'react-redux';
 import { Listing } from '../features/listing/Listing';
 import configureStore from 'redux-mock-store';
-import { useSelector, useDispatch } from 'react-redux'; // Importing useSelector and useDispatch
-import fetchMock from 'jest-fetch-mock'; // Importing jest-fetch-mock to mock fetch API
-import { addItem } from '../features/cart/cartSlice'; // Importing addItem action from cartSlice
+import { useSelector, useDispatch } from 'react-redux'; 
+import fetchMock from 'jest-fetch-mock';
+import { addItem } from '../features/cart/cartSlice'; 
 
 const mockStore = configureStore([]);
 
@@ -34,7 +34,7 @@ describe('Listing Component', () => {
         <Listing />
       </Provider>
     );
-    expect(screen.getByText('Loading...')).toBeInTheDocument(); // Assuming 'Loading...' is the loading message
+    expect(screen.getByText('Loading...')).toBeInTheDocument(); // Assuming 'Loading...' is the loading message -> that changed, need to update this test
   });
 
   test('renders product list with correct data', () => {
@@ -60,7 +60,7 @@ describe('Listing Component', () => {
         <Listing />
       </Provider>
     );
-    fireEvent.click(screen.getByText('Add to Cart')); // Assuming 'Add to Cart' is the button text
+    fireEvent.click(screen.getByText('Add to Cart')); // Assuming 'Add to Cart' is the button text -> need to change this as well
     expect(dispatchMock).toHaveBeenCalledWith(addItem({ productid: 1, name: 'Product 1', price: 10.99, image_url: 'product1.jpg' }));
   });
 });

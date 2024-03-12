@@ -1,3 +1,5 @@
+// Not being used, will be deleted soon
+
 export const inventoryData = [
     { name: 'Hello World Hat', price: 23.99, img: 'https://static-assets.codecademy.com/Courses/Learn-Redux/codecademy-store/hello-world-hat.jpg' },
     { name: 'Learn From Home Joggers', price: 45.99, img: 'https://static-assets.codecademy.com/Courses/Learn-Redux/codecademy-store/sweatpants.jpg' },

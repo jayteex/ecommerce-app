@@ -40,7 +40,6 @@ export default function Account() {
         setEditMode(false); 
     };
     
-
     const handleChange = (e) => {
         setEditedUser({
             ...editedUser,

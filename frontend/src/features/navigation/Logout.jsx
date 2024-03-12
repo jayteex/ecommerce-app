@@ -2,12 +2,12 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { signInRequest, signInSuccess } from "../signin/signInSlice";
-import { signOutUserApi } from "../../api/signOut"; // Updated import
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { signOutUserApi } from "../../api/signOut"; 
+import { useNavigate } from "react-router-dom";
 
 export default function Logout() {
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Initialize navigate hook
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const logoutUser = async () => {
@@ -17,7 +17,7 @@ export default function Logout() {
         // Dispatch actions to update the Redux store
         dispatch(signInRequest());
         dispatch(signInSuccess(null));
-        //navigate("/"); // Navigate to the desired route after logout
+        //navigate("/"); // Navigate to the desired route after logout; commented out at the moment
       } catch (error) {
         // Handle error, if any
         console.error("Error logging out:", error);

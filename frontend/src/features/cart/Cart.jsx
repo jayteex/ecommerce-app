@@ -1,4 +1,7 @@
 // frontend/src/features/cart/Cart.jsx
+
+// DEPRECARTED; replaced with offcanvas component 
+
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { calculateTotal, getCurrencySymbol } from '../../utils/currencyLogic';

@@ -79,13 +79,14 @@ app.use((error, req, res, next) => {
 app.use('/home', require('./routes/products.js'));
 app.use('/sign-up', require('./routes/register.js')); 
 app.use('/sign-in', require('./routes/login.js'));
-const logoutRouter = require('./routes/logout.js')(client); // Pass the client object
+const logoutRouter = require('./routes/logout.js')(client); // Pass the Redis client object
 app.use('/logout', logoutRouter);
 app.use('/api-session', require('./routes/session.js'));
 app.use('/session-test', require('./routes/session-test.js'));
 app.use('/update-account', require('./routes/account.js'));
 
-// Debugging middleware for wildcard route
+// Wildcard route and debugging middleware 
+// React Routing and server side rendering are clashing at the moment, leads to "Not found" error on hosted site, this might help
 app.get('*', (req, res) => {
   console.log('Wildcard route triggered for path:', req.originalUrl);
   const indexPath = path.join(__dirname, '/public', 'index.html');

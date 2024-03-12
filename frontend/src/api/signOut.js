@@ -2,10 +2,10 @@
 import axios from 'axios';
 import { HOST } from ".";
 
-export const signOutUserApi = async () => { // Renamed function to signOutUserApi
+export const signOutUserApi = async () => { 
   try {
-    await axios.post(`${HOST}/logout`); // Updated endpoint URL
+    await axios.post(`${HOST}/logout`); 
   } catch (error) {
-    throw new Error(`Error signing out: ${error.message}`); // Throwing error for handling in Logout.jsx
+    throw new Error(`Error signing out: ${error.message}`); 
   }
 };

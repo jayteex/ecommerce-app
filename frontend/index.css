@@ -81,7 +81,6 @@ a {
     color: #ff0;
 }
 
-
 #error-wrapper {
     text-align: center;
 }
@@ -189,8 +188,6 @@ input.quantity {
     color: darkblue;
 }
 
-
-
 #cart-container {
     margin: 0 -45px;
     padding: 12px 45px;
@@ -227,7 +224,6 @@ input.quantity {
 footer {
     text-align: center;
 }
-
 
 @media (max-width: 600px) {
 
