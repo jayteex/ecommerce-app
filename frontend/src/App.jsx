@@ -27,6 +27,12 @@ function ListingWrapper() {
 
 export const App = () => {
 
+   // Define production base URL
+   const productionBaseURL = 'https://ecommerce-app-frontend-d845.onrender.com';
+
+   // Determine if the environment is production
+   const isProduction = process.env.NODE_ENV === 'production';
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -35,7 +41,7 @@ export const App = () => {
   }, [dispatch]);
 
   return (
-    <Router>
+    <Router basename={isProduction ? productionBaseURL : '/'}>
       <Routes>
         <Route path="/" element={<Root />}>
           <Route index element={<Navigate to="/home" replace />} />
