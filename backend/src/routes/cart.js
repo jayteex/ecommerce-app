@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { supabase } = require('../config/supabase');
 
+// This route still needs to be connected to the frontend (Redux) logic
+
 // POST endpoint to add items to a cart
 router.post('/:cartId', async (req, res) => {
   const { cartId } = req.params;

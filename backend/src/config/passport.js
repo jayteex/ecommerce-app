@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const supabase = require('./supabase');
 require('dotenv').config();
 
+// Initializing Passport.js logic for Login and Authentication
 const initialize = (passport, redisClient) => {
   passport.use(new LocalStrategy({ usernameField: 'email', passwordField: 'password' }, async (email, password, done) => {
     try {

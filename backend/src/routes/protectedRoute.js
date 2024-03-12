@@ -4,8 +4,9 @@ const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 const { supabase } = require('../config/supabase');
 const authMiddleware = require('../config/auth');
-
 const router = express.Router();
+
+// Currently not in use, using Redis, passport.js and express-session for authentication
 
 // Apply authentication middleware to this route
 router.use(authMiddleware);

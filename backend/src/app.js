@@ -75,15 +75,7 @@ app.use((error, req, res, next) => {
   });
 });
 
-// Debugging middleware for wildcard route
-app.get('*', (req, res) => {
-  console.log('Wildcard route triggered for path:', req.originalUrl);
-  const indexPath = path.join(__dirname, '/public', 'index.html');
-  console.log('Serving index.html from path:', indexPath);
-  res.sendFile(indexPath);
-});
-
-// Route setup (consider moving Redis interaction logic inside routes)
+// Route setup (need to consider moving Redis interaction logic inside routes)
 app.use('/home', require('./routes/products.js'));
 app.use('/sign-up', require('./routes/register.js')); 
 app.use('/sign-in', require('./routes/login.js'));
@@ -93,7 +85,15 @@ app.use('/api-session', require('./routes/session.js'));
 app.use('/session-test', require('./routes/session-test.js'));
 app.use('/update-account', require('./routes/account.js'));
 
-// Listener (Only start server if this file is being executed directly)
+// Debugging middleware for wildcard route
+app.get('*', (req, res) => {
+  console.log('Wildcard route triggered for path:', req.originalUrl);
+  const indexPath = path.join(__dirname, '/public', 'index.html');
+  console.log('Serving index.html from path:', indexPath);
+  res.sendFile(indexPath);
+});
+
+// Listener (only start server if this file is being executed directly - had issues with that previously)
 if (require.main === module) {
   const port = process.env.PORT || 3000;
   app.listen(port, () => {

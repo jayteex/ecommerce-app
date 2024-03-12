@@ -30,7 +30,7 @@ router.post('/',
       const { data: existingCustomers, error: customerError } = await supabase
         .from('customers')
         .select('customerid')
-        .order('customerid', { ascending: false }) // Get the highest customerid
+        .order('customerid', { ascending: false }) // Get the highest customerid (might need to be refactored, was implemented when database had duplicate users)
         .limit(1);
 
       if (customerError) {

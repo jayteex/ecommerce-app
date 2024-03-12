@@ -7,6 +7,7 @@ router.get('/', async (req, res) => {
   // How to specifically get the user id has to still be implememted 
   // This is one way of doing it
   // Session code needs to be updated 
+
   const userId = req.session.userId;
 
   try {

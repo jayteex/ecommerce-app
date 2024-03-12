@@ -2,6 +2,8 @@
 const express = require('express');
 const router = express.Router();
 
+// This logic exists to ensure authentication persists after reload. Currently only working properly locally
+
 router.get('/', (req, res) => {
   try {
     // Check if session exists

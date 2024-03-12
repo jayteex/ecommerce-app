@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { supabase } = require('../config/supabase');
 
+// Checkout frontend logic still TO DO
+
 // POST endpoint for checkout
 router.post('/cart/:cartId/checkout', async (req, res) => {
   const { cartId } = req.params;

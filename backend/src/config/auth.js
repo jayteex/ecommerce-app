@@ -1,4 +1,9 @@
 // backend/src/config/auth.js
+
+
+// Current use pending
+
+
 const supabase = require('./supabase');
 
 const authMiddleware = async (req, res, next) => {

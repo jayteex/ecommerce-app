@@ -32,6 +32,7 @@ router.get('/', async (req, res) => {
 });
 
 // GET a single product by ID
+// Needs to be connected to frontend still
 router.get('/:productId', async (req, res) => {
     try {
         const { productId } = req.params;
