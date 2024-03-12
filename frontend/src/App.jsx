@@ -50,6 +50,7 @@ export const App = () => {
           <Route path="sign-in" element={<SignIn />} />
           <Route path="account" element={<Account />} />
           <Route path="logout" element={<Logout />} />
+          <Route path="*" element={<ListingWrapper />} />
         </Route>
       </Routes>
     </Router>
