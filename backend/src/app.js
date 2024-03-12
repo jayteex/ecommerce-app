@@ -7,7 +7,8 @@ const path = require('path');
 const session = require('express-session');
 const cors = require('cors');
 const RedisStore = require('connect-redis')(session);
-const redis = require('redis');
+const Redis = require("ioredis");
+
 
 // Middleware to set Content-Type header for JSON responses
 app.use((req, res, next) => {
@@ -15,57 +16,32 @@ app.use((req, res, next) => {
   next();
 });
 
+const { REDIS_URL } = process.env; // Load from .env
+
+const client = new Redis(REDIS_URL);
+
+client.on("connect", () => console.log("Connected to Redis"));
+client.on("error", (error) => console.error("Redis Error:", error));
+
+// Session x Redis configuration
+app.use(session({
+  store: new RedisStore({ client: client }),
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 24 * 60 * 60 * 1000
+  }
+}));
+
 // Passport
 const passport = require('passport');
-const initializePassport = require('./config/passportConfig.js');
-initializePassport(passport);
+const initializePassport = require('./config/passport.js');
+initializePassport(passport, client);
 app.use(passport.initialize());
 app.use(passport.session());
-
-const redisClient = redis.createClient({
-  host: process.env.REDIS_HOST,
-  port: process.env.REDIS_PORT,
-});
-
-// Function to connect to Redis (can be reused)
-const connectToRedis = async () => {
-  try {
-    await redisClient.connect();
-    console.log('Connected to Redis');
-  } catch (error) {
-    console.error('Error connecting to Redis:', error);
-    // Implement error handling strategy (e.g., retry logic, fallback)
-  }
-};
-
-// Session configuration
-if (process.env.NODE_ENV === 'production') {
-  connectToRedis();
-  // Use Redis when in production
-  app.use(session({
-    store: new RedisStore({ client: redisClient }),
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      httpOnly: true,
-      secure: true,
-      maxAge: 24 * 60 * 60 * 1000
-    }
-  }));
-} else {
-  // Use in-memory session store for local development
-  app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      httpOnly: true,
-      secure: false, 
-      maxAge: 24 * 60 * 60 * 1000
-    }
-  }));
-}
 
 // Use CORS
 app.use(cors({
@@ -117,4 +93,6 @@ if (require.main === module) {
   });
 }
 
-module.exports = app;
+module.exports = {
+  app
+};

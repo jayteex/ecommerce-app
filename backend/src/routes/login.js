@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
   res.send(`Login Page${errorMessage ? ` - Error: ${errorMessage}` : ''}`);
 });
 
-router.post('/', passport.authenticate('local', { failureRedirect: '/login?error=Invalid credentials' }), async (req, res) => {
+router.post('/', passport.authenticate('local'), async (req, res) => {
   try {
     const { data: dbuser, error } = await supabase
       .from('customers')
@@ -28,8 +28,10 @@ router.post('/', passport.authenticate('local', { failureRedirect: '/login?error
       return res.status(404).json({ error: 'User not found' });
     }
 
-    // Store only the user id in the session
-    req.session.userId = req.user.customerid;
+    //req.session.passport = { user: req.user };
+    console.log('req.session.passport: ', req.session.passport);
+    console.log('req.session: ',req.session);
+    console.log('req.user: ',req.user);
 
     return res.status(200).json(dbuser);
   } catch (err) {

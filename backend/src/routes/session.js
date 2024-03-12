@@ -4,12 +4,22 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
   try {
-    // Check if session and passport properties exist
-    if (!req.session || !req.session.passport || !req.session.passport.user) {
+    // Check if session exists
+    if (!req.session) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
-    // Access authenticated user from req.user (provided by Passport.js)
-    console.log("This is the authenticated user:", req.user);
+    
+    // Check if user is authenticated
+    if (!req.session.passport || !req.session.passport.user) {
+      return res.status(401).json({ error: 'User not authenticated' });
+    }
+    
+    // Logging to see if it contains necessary information
+    console.log("req.session: ", req.session);
+    console.log("req.user: ", req.user);
+    console.log("req.session.passport.user: ", req.session.passport.user);
+
+    // Return user data from Redis or from req.user if populated
     res.status(200).json(req.user);
   } catch (error) {
     console.error(`Error fetching session data: ${error.message}`);
