@@ -64,14 +64,6 @@ app.use(express.urlencoded({ extended: true }));
 // Logging middleware
 app.use(morgan('dev'));
 
-// Serve frontend assets
-app.use(express.static(path.join(__dirname, '../../frontend/build')));
-
-// Serve index.html for any route not explicitly defined in the backend
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../frontend/build/index.html'));
-});
-
 // Global error handling middleware
 app.use((error, req, res, next) => {
   console.error(error);
@@ -102,5 +94,6 @@ if (require.main === module) {
 }
 
 module.exports = {
-  app
+  app,
+  client
 };

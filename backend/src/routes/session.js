@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
     }
     
     // Check if user is authenticated
-    if (!req.session.passport || !req.session.passport.user) {
+    if (!req.user) {
       return res.status(401).json({ error: 'User not authenticated' });
     }
     
