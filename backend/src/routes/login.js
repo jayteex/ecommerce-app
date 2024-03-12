@@ -2,7 +2,6 @@
 const express = require('express');
 const passport = require('passport');
 const supabase = require('../config/supabase');
-
 const router = express.Router();
 
 router.get('/', (req, res) => {

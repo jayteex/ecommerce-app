@@ -80,7 +80,10 @@ app.use((error, req, res, next) => {
 app.use('/home', require('./routes/products.js'));
 app.use('/sign-up', require('./routes/register.js')); 
 app.use('/sign-in', require('./routes/login.js'));
-app.use('/logout', require('./routes/logout.js'));
+
+const logoutRouter = require('./routes/logout.js')(client); // Pass the client object
+app.use('/logout', logoutRouter);
+
 app.use('/api-session', require('./routes/session.js'));
 app.use('/session-test', require('./routes/session-test.js'));
 app.use('/update-account', require('./routes/account.js'));
@@ -93,7 +96,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = {
-  app,
-  client
-};
+module.exports = { app, client };
