@@ -5,6 +5,7 @@ import { TextField, Button, Typography, InputLabel } from '@mui/material';
 import { selectUser } from '../signin/signInSlice';
 import { updateUserRequest, updateUserSuccess, updateUserFailure } from './accountSlice';
 import { updateAccount } from '../../api/updateAccount'; 
+import { fetchSessionDataAndUpdateStore } from '../signin/signInSlice'; 
 import './Account.css'; 
 
 export default function Account() {
@@ -32,7 +33,7 @@ export default function Account() {
                 // Call API to update account
                 await updateAccount(editedUser);
                 dispatch(updateUserSuccess(editedUser));
-                window.location.reload();
+                dispatch(fetchSessionDataAndUpdateStore());
             } catch (error) {
                 dispatch(updateUserFailure(error.message));
             }
