@@ -47,6 +47,7 @@ export const App = () => {
           <Route path="account" element={<Account />} />
           <Route path="logout" element={<Logout />} />
           <Route path="*" element={<ListingWrapper />} />
+          <Route path="*" element={<Navigate to="/home" replace />} />
         </Route>
       </Routes>
     </Router>
