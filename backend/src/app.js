@@ -87,6 +87,9 @@ app.use('/logout', logoutRouter);
 app.use('/api-session', require('./routes/session.js'));
 app.use('/session-test', require('./routes/session-test.js'));
 app.use('/update-account', require('./routes/account.js'));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html')); // Assuming a public folder for static assets
+});
 
 // Listener (Only start server if this file is being executed directly)
 if (require.main === module) {

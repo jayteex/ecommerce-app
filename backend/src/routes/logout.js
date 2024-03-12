@@ -15,6 +15,9 @@ const handleLogout = (client) => async (req, res) => {
         if (delError) {
           throw delError;
         }
+
+        // Clear session cookie on client-side
+        res.cookie('sessionCookieName', '', { expires: new Date(0) });
         // Send success response
         res.status(200).json({ message: 'Logout successful' });
       });
