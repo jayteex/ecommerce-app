@@ -9,6 +9,8 @@ const cors = require('cors');
 const RedisStore = require('connect-redis')(session);
 const Redis = require("ioredis");
 
+// Middleware to trust proxy headers
+app.set('trust proxy', 1);
 
 // Middleware to set Content-Type header for JSON responses
 app.use((req, res, next) => {
