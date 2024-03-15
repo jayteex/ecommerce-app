@@ -52,8 +52,11 @@ ATTENTION: THIS WILL NEVER BE A "REAL" STORE. For fun and portfolio purposes onl
 ## TODO
 
 - Advanced PDP and persistent OC cart 
+  - OC cart icon/event when product is added
+  - Buy-button on PDP (not only on PLP)
 - Advanced Account page
   - Order History
+  - Refactored save/alter data functionality (it works locally, but not yet on Render)
 - Search
 - Checkout process
   - Mock payment integration
