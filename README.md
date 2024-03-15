@@ -6,7 +6,7 @@ This is a PERN application, with a Postgres database, Node/Express backend, and 
 
 Work in progress. See commits/code for details. 
 
-Application is under active development and usually gets 1 commit per weekday. Finish date set for mid March
+Application is under active development and usually gets 1 commit per weekday.
 
 ## How to use
 
@@ -45,14 +45,15 @@ ATTENTION: THIS WILL NEVER BE A "REAL" STORE. For fun and portfolio purposes onl
   - Persistent user authentication across page reloads
   - Conditional Rendering
 - Logout process
+- Account page
+- Offcanvas cart
+- Product Detail Pages (PDP)
 
 ## TODO
 
-- Product Detail Pages (PDP)
-- Account page
-  - User info
+- Advanced PDP and persistent OC cart 
+- Advanced Account page
   - Order History
-- Advanced cart 
 - Search
 - Checkout process
   - Mock payment integration
