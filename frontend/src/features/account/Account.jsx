@@ -5,12 +5,13 @@ import { TextField, Button, Typography, InputLabel } from '@mui/material';
 import { selectUser } from '../signin/signInSlice';
 import { updateUserRequest, updateUserSuccess, updateUserFailure } from './accountSlice';
 import { updateAccount } from '../../api/updateAccount'; 
+import { signInSuccess } from '../signin/signInSlice';
 import { fetchSessionDataAndUpdateStore } from '../signin/signInSlice'; 
 import './Account.css'; 
 
 export default function Account() {
     const dispatch = useDispatch();
-    const user = useSelector(selectUser);
+    let user = useSelector(selectUser);
     const [editMode, setEditMode] = useState(false);
     const [editedUser, setEditedUser] = useState({ ...user });
 
@@ -31,9 +32,11 @@ export default function Account() {
             dispatch(updateUserRequest());
             try {
                 // Call API to update account
-                await updateAccount(editedUser);
-                dispatch(updateUserSuccess(editedUser));
-                dispatch(fetchSessionDataAndUpdateStore());
+                let newUserData = await updateAccount(editedUser);
+                console.log("New user data: ", newUserData);
+                dispatch(updateUserSuccess(newUserData));
+                // dispatch(fetchSessionDataAndUpdateStore());
+                dispatch(signInSuccess(newUserData));
             } catch (error) {
                 dispatch(updateUserFailure(error.message));
             }

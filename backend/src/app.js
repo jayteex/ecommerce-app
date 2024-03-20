@@ -51,10 +51,10 @@ app.use(cors({
   credentials: true
 }));
 
-// Redirect root URL to "/home"
-app.get('/', (req, res) => {
-  res.redirect('/home');
-});
+// // Redirect root URL to "/home"
+// app.get('/', (req, res) => {
+//   res.redirect('/home');
+// });
 
 // Images for products
 app.use('/images', express.static(path.join(__dirname, 'images')));

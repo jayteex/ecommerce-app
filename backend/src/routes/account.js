@@ -15,11 +15,13 @@ router.put('/', async (req, res) => {
                 address,
                 city
             })
-            .eq('customerid', customerid);
+            .eq('customerid', customerid)
+            .select();
         if (error) {
             throw error;
         }
-        res.status(200).send('Account updated successfully');
+        console.log("Account route: ", data);
+        res.status(200).send(data[0]);
     } catch (error) {
         console.error('Error updating account:', error.message);
         res.status(500).send('Error updating account');

@@ -17,6 +17,9 @@ const accountSlice = createSlice({
       state.error = null;
     },
     updateUserSuccess: (state, action) => {
+      console.log('action.payload: ', action.payload);
+      console.log('state: ', state);
+      console.log('action: ', action);
       state.isLoading = false;
       state.user = action.payload;
     },
