@@ -32,7 +32,7 @@ export default function Account() {
             dispatch(updateUserRequest());
             try {
                 // Call API to update account
-                let newUserData = await updateAccount(editedUser);
+                const newUserData = await updateAccount(editedUser);
                 console.log("New user data: ", newUserData);
                 dispatch(updateUserSuccess(newUserData));
                 // dispatch(fetchSessionDataAndUpdateStore());
