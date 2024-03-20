@@ -87,7 +87,7 @@ export default function SignIn() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Login
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
@@ -132,11 +132,13 @@ export default function SignIn() {
                 Sign In
               </Button>
               <Grid container>
+                {/*
                 <Grid item xs>
                   <Link href="#" variant="body2">
                     Forgot password?
                   </Link>
                 </Grid>
+              */}
                 <Grid item>
                   <Link component={NavLink} to="/sign-up" variant="body2">
                     {"Don't have an account? Sign Up"}

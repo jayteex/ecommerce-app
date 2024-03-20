@@ -3,6 +3,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrency } from './currencyFilterSlice';
 import { currenciesData } from './mockData';
+import "./CurrencyFilter.css";
 
 export default function CurrencyFilter() {
   const dispatch = useDispatch();

@@ -58,7 +58,6 @@ export default function Listing() {
     <ul id="inventory-container">
       {filteredProducts.map((product) => (
         <li key={product.productid} className="item">
-          {/* Wrap each product item with Link */}
           <Link to={`/product/${product.productid}`}>
             <img src={product.image_url} alt={product.name} />
             <h3 className="product-name">{product.name}</h3>

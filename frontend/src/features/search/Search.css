@@ -1,0 +1,33 @@
+/* frontend/src/features/search/Search.css */
+.search-container {
+    margin-bottom: 20px;
+  }
+  
+  .search-input {
+    width: calc(100% - 48px);
+    max-width: 300px;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid darkblue;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .search-button {
+    margin-top: 8px;
+    margin-left: 8px;
+    padding: 8px 16px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: darkblue;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .search-button:hover {
+    background-color: #004080;
+  }
+  
+  

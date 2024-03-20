@@ -1,0 +1,33 @@
+/* frontend/src/features/currencyFilter/CurrencyFilter.css */
+#currency-filters-container {
+    margin-bottom: 24px;
+    margin-left: 4px;
+}
+
+#currency-filters-container h3 {
+    margin: 4px 4px 4px 0;
+    font-size: 1.1rem;
+}
+
+.currency-button {
+    background: white;
+    border: 1px solid var(--black);
+    padding: 2px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.currency-button:first-of-type {
+    border-top-left-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+}
+
+.currency-button:last-of-type {
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+}
+
+.currency-button.selected {
+    background: var(--black);
+    color: white;
+}

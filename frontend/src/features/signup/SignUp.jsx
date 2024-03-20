@@ -162,12 +162,12 @@ export default function SignUp() {
                   onChange={handleInputChange}
                 />
               </Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+                  label="You don't have to click this button."
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
             <Button
               type="submit"

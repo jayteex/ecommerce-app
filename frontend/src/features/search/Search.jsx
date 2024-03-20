@@ -2,6 +2,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSearchTerm, clearSearchTerm } from './searchSlice';
+import "./Search.css";
 
 const Search = () => {
   const searchTerm = useSelector(state => state.search);
@@ -17,15 +18,16 @@ const Search = () => {
   };
 
   return (
-    <div>
+    <div className="search-container">
       <input
+        className="search-input"
         type="text"
         placeholder="Search..."
         value={searchTerm}
         onChange={onSearchTermChangeHandler}
       />
       {searchTerm.length > 0 && (
-        <button onClick={clearSearchTermHandler}>Clear</button>
+        <button className="search-button" onClick={clearSearchTermHandler}>Clear</button>
       )}
     </div>
   );
