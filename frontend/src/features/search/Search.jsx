@@ -1,7 +1,4 @@
 // frontend/src/features/search/Search.jsx
-
-// Search not functional yet 
-
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSearchTerm, clearSearchTerm } from './searchSlice';
@@ -35,3 +32,4 @@ const Search = () => {
 };
 
 export default Search;
+

@@ -1,11 +1,9 @@
 // frontend/src/features/search/searchSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = '';
-
 const searchSlice = createSlice({
   name: 'search',
-  initialState,
+  initialState: '',
   reducers: {
     setSearchTerm(state, action) {
       return action.payload;
@@ -18,3 +16,4 @@ const searchSlice = createSlice({
 
 export const { setSearchTerm, clearSearchTerm } = searchSlice.actions;
 export const searchReducer = searchSlice.reducer;
+

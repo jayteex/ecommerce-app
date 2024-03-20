@@ -13,6 +13,7 @@ export default function Listing() {
   const products = useSelector((state) => state.listing.products);
   const loading = useSelector((state) => state.listing.loading);
   const currencyFilter = useSelector((state) => state.currencyFilter);
+  const searchTerm = useSelector((state) => state.search); // Get search term from Search slice
 
   useEffect(() => {
     if (products.length === 0) {
@@ -32,6 +33,11 @@ export default function Listing() {
     dispatch(addItem(product));
   };
 
+  // Filter products based on search term
+  const filteredProducts = products.filter(product =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   // Some text and GIF to appease long waiting time after databases were inactive for a while
   if (loading) {
     return (
@@ -44,13 +50,13 @@ export default function Listing() {
     );
   }
 
-  if (!products || products.length === 0) {
-    return <p>Sorry, no products are currently available...</p>;
+  if (!filteredProducts || filteredProducts.length === 0) {
+    return <p>No products matching the search term...</p>;
   }
 
   return (
     <ul id="inventory-container">
-      {products.map((product) => (
+      {filteredProducts.map((product) => (
         <li key={product.productid} className="item">
           {/* Wrap each product item with Link */}
           <Link to={`/product/${product.productid}`}>
@@ -72,6 +78,7 @@ export default function Listing() {
     </ul>
   );
 };
+
 
 
 

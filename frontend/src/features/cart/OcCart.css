@@ -1,3 +1,4 @@
+/* frontend/src/features/cart/OcCart.css*/
 .oc-icon {
     margin: 0;
     padding: 0;
@@ -7,9 +8,29 @@
     line-height: 1.5;
     font-variant: normal;
     text-rendering: auto;
- 
+
 }
 
 .oc-icon:hover {
     cursor: pointer;
+}
+
+.cart-icon-container {
+    position: relative;
+    display: inline-block;
+}
+
+.cart-counter {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    width: 16px; 
+    height: 16px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px; 
   }

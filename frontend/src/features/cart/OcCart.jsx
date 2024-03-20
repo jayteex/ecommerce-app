@@ -12,6 +12,9 @@ function OcCart() {
   const [show, setShow] = useState(false);
   const cart = useSelector((state) => state.cart);
   const currencyFilter = useSelector((state) => state.currencyFilter);
+  
+  // Calculate cart count
+  const cartCount = Object.values(cart?.items || {}).reduce((acc, item) => acc + item.quantity, 0);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -24,11 +27,11 @@ function OcCart() {
     dispatch(changeItemQuantity({ name, newQuantity }));
   };
 
-  const cartElements = cart ? Object.keys(cart).map(createCartItem) : null;
-  const total = calculateTotal(cart, currencyFilter);
+  const cartElements = cart ? Object.keys(cart.items).map(createCartItem) : null;
+  const total = calculateTotal(cart.items, currencyFilter);
 
   function createCartItem(name) {
-    const item = cart[name];
+    const item = cart.items[name];
 
     if (!item || item.quantity === 0) {
       return;
@@ -56,7 +59,10 @@ function OcCart() {
 
   return (
     <>
-      <i className="fa-solid fa-cart-shopping oc-icon" onClick={handleShow}></i>
+      <div className="cart-icon-container">
+        <i className="fa-solid fa-cart-shopping oc-icon" onClick={handleShow}></i>
+        {cartCount > 0 && <div className="cart-counter">{cartCount}</div>} {/* Display counter if cart is not empty */}
+      </div>
 
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>
