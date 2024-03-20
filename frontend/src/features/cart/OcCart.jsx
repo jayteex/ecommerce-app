@@ -38,7 +38,7 @@ function OcCart() {
     }
 
     return (
-      <div key={name}>
+      <div key={name} className="cart-item">
         <p>{name}</p>
         <select
           className="item-quantity"

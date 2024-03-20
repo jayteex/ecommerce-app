@@ -54,54 +54,11 @@ a {
     overflow: hidden;
 }
 
-#cart-items {
-    padding: 0;
-}
-
-#cart-items p {
-    display: inline;
-    margin: 0;
-}
-
-#cart-items li {
-    list-style: none;
-    font-weight: 700;
-    color: var(--black);
-    display: flex;
-    margin-bottom: 8px;
-}
-
 input.quantity {
     width: 35px;
     margin-left: auto;
     border-radius: var(--border-radius);
     border: 1px solid var(--black);
-}
-
-
-#cart-container {
-    margin: 0 -45px;
-    padding: 12px 45px;
-    padding-bottom: 24px;
-    background: #f2f2f2;
-    position: sticky;
-    bottom: 0;
-}
-
-#cart-container>hr {
-    margin: 0 -45px;
-    margin-bottom: 12px;
-}
-
-.total {
-    display: flex;
-    margin: 0;
-    font-size: 1.8rem;
-}
-
-.total-value {
-    color: darkblue;
-    margin-left: auto;
 }
 
 footer {
