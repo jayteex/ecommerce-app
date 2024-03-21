@@ -50,7 +50,9 @@ router.post('/add', async (req, res) => {
 
 router.get('/items', async (req, res) => {
   try {
+    console.log('req.session.cartid:', req.session.cartid);
     const cartid = req.session.cartid;
+    console.log('cartid: ', cartid);
 
     // Query cart items based on cartid
     const { data: cartItems, error: cartItemsError } = await supabase

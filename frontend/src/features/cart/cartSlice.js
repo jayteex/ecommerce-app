@@ -1,7 +1,7 @@
 // frontend/src/features/cart/cartSlice.js
 import { createSlice } from '@reduxjs/toolkit';
-import { HOST } from "../../api/index.js";
 import axios from 'axios';
+import { HOST } from "../../api/index.js";
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -20,7 +20,7 @@ const cartSlice = createSlice({
       const { name, price, image_url, productid } = action.payload;
       state.items[name] = {
         price,
-        quantity: (state.items[name] ? state.items[name].quantity + 1 : 1),
+        quantity: (state.items[name]?.quantity || 0) + 1,
         image_url,
         productid
       };
@@ -33,7 +33,8 @@ const cartSlice = createSlice({
     },
     changeItemQuantity(state, action) {
       const { name, newQuantity } = action.payload;
-      if (state.items[name]) {
+      const item = state.items[name];
+      if (item) {
         state.items[name].quantity = newQuantity;
         state.count = Object.values(state.items).reduce((acc, item) => acc + item.quantity, 0);
       }
@@ -56,7 +57,6 @@ export const cartReducer = cartSlice.reducer;
 
 export const addItem = (product) => async (dispatch) => {
   dispatch(addItemStart());
-
   try {
     await axios.post(`${HOST}/cart/add`, product, { withCredentials: true });
     dispatch(addItemSuccess(product));
@@ -71,6 +71,7 @@ export const refillCartData = () => async (dispatch) => {
     dispatch(refillCart({ cartData: response.data }));
   } catch (error) {
     console.error('Error refilling cart data:', error);
+    dispatch(addItemFailure('Failed to refill cart data'));
   }
 };
 
@@ -90,8 +91,10 @@ export const updateItemQuantity = (productName, newQuantity) => async (dispatch,
     dispatch(changeItemQuantity({ name: productName, newQuantity }));
   } catch (error) {
     console.error('Error updating quantity:', error);
+    dispatch(addItemFailure('Failed to update quantity'));
   }
 };
+
 
 
 
