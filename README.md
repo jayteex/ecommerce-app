@@ -60,6 +60,7 @@ ATTENTION: THIS WILL NEVER BE A "REAL" STORE. For fun and portfolio purposes onl
 
 ## TODO
 
+- Session/cookie debugging on the hosted site (works fine locally)
 - Mock payment integration
 - Order History
 - Advanced styling
