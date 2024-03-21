@@ -1,10 +1,12 @@
 // frontend/src/features/cart/OcCart.jsx
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useDispatch, useSelector } from 'react-redux';
 import { calculateTotal, getCurrencySymbol } from '../../utils/currencyLogic';
 import { changeItemQuantity } from './cartSlice';
+import { updateItemQuantity } from './cartSlice';
+import { useNavigate } from 'react-router-dom'; 
 import "./OcCart.css";
 
 function OcCart() {
@@ -12,7 +14,8 @@ function OcCart() {
   const [show, setShow] = useState(false);
   const cart = useSelector((state) => state.cart);
   const currencyFilter = useSelector((state) => state.currencyFilter);
-  
+  const navigate = useNavigate(); 
+
   // Calculate cart count
   const cartCount = Object.values(cart?.items || {}).reduce((acc, item) => acc + item.quantity, 0);
 
@@ -24,7 +27,7 @@ function OcCart() {
       return;
     }
     const newQuantity = Number(input);
-    dispatch(changeItemQuantity({ name, newQuantity }));
+    dispatch(updateItemQuantity(name, newQuantity));
   };
 
   const cartElements = cart ? Object.keys(cart.items).map(createCartItem) : null;
@@ -53,15 +56,21 @@ function OcCart() {
             </option>
           ))}
         </select>
+        <img src={item.image_url} alt={name} className="cart-item-image" />
       </div>
     );
   }
+
+  const goToCheckout = () => {
+    handleClose();
+    navigate('/checkout'); // Navigate to the checkout page
+  };
 
   return (
     <>
       <div className="cart-icon-container">
         <i className="fa-solid fa-cart-shopping oc-icon" onClick={handleShow}></i>
-        {cartCount > 0 && <div className="cart-counter">{cartCount}</div>} {/* Display counter if cart is not empty */}
+        {cartCount > 0 && <div className="cart-counter">{cartCount}</div>} 
       </div>
 
       <Offcanvas show={show} onHide={handleClose}>
@@ -77,6 +86,9 @@ function OcCart() {
               {total}
             </span>
           </h3>
+          {cartCount > 0 && (
+            <Button id="checkout-button" onClick={goToCheckout}>Go to Checkout</Button>
+          )}
         </Offcanvas.Body>
       </Offcanvas>
     </>
@@ -85,4 +97,5 @@ function OcCart() {
 }
 
 export default OcCart;
+
 

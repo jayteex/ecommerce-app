@@ -20,14 +20,16 @@ ATTENTION: THIS WILL NEVER BE A "REAL" STORE. For fun and portfolio purposes onl
 
 - PostgreSQL
   - Supabase
+- Node.js
 - Express.js
   - Passport
   - Session
   - CORS
-- React & React Router
+  - Redis
+- React
+  - React Router
   - Axios
-- Redux Toolkit
-- Node.js
+  - Redux Toolkit
 - Jest, Supertest, Morgan
 - Vite
 
@@ -44,23 +46,23 @@ ATTENTION: THIS WILL NEVER BE A "REAL" STORE. For fun and portfolio purposes onl
 - Sign up and login process
   - Persistent user authentication across page reloads
   - Conditional Rendering
+  - Session storage in Redis
 - Logout process
 - Account page
+  - Refactored save/alter data functionality
 - Offcanvas cart
+  - OC cart icon/event when product is added
+  - Add OC cart products to database
 - Product Detail Pages (PDP)
+  - Add to cart button on PDP (not only on PLP)
+- Search
+- Checkout page
 
 ## TODO
 
-- Advanced PDP and persistent OC cart 
-  - OC cart icon/event when product is added
-  - Buy-button on PDP (not only on PLP)
-- Advanced Account page
-  - Order History
-  - Refactored save/alter data functionality (it works locally, but not yet on Render)
-- Search
-- Checkout process
-  - Mock payment integration
-- Footer
+- Mock payment integration
+- Order History
+- Advanced styling
 - Increase speed & performance, if possible
   - (free tiers of Render & Supabase are quite slow, especially on initial load)
 - Bonus

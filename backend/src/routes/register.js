@@ -53,7 +53,7 @@ router.post('/',
 
       // Create a new cart for the customer
       const { error: cartError } = await supabase
-        .from('cart')
+        .from('oldcart')
         .insert([{ customerid: newCustomerId, dateadded: new Date() }]);
 
       if (cartError) {

@@ -8,6 +8,7 @@ export const registerUser = async (userData) => {
             headers: {
                 'Content-Type': 'application/json',
             },
+            withCredentials: true,
         });
 
         return response.data;

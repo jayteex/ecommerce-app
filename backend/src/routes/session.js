@@ -17,9 +17,10 @@ router.get('/', (req, res) => {
     }
     
     // Logging to see if it contains necessary information
-    console.log("req.session: ", req.session);
-    console.log("req.user: ", req.user);
-    console.log("req.session.passport.user: ", req.session.passport.user);
+    console.log("req.session (from session.js): ", req.session);
+    console.log("req.session.cartid (from session.js): ", req.session.cartid);
+    console.log("req.user(from session.js): ", req.user);
+    console.log("req.session.passport.user(from session.js): ", req.session.passport.user);
 
     // Return user data from Redis or from req.user if populated
     res.status(200).json(req.user);

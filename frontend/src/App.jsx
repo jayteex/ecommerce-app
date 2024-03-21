@@ -10,9 +10,11 @@ import Account from './features/account/Account';
 import Logout from './features/navigation/Logout';
 import CurrencyFilter from './features/currencyFilter/CurrencyFilter';
 import ProductDetails from './features/details/ProductDetails';
+import Checkout from './features/checkout/Checkout';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchSessionDataAndUpdateStore } from './features/signin/signInSlice'; 
+import { fetchSessionDataAndUpdateStore } from './features/signin/signInSlice';
+import { refillCartData } from './features/cart/cartSlice';
 
 // A wrapper that combines some components, so that they can be used in the Router below
 function ListingWrapper() {
@@ -30,8 +32,9 @@ export const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Dispatch the thunk action to fetch session data and update the store after every reload
+    // Dispatch the thunk action to fetch cart and session data and update the store after every reload
     dispatch(fetchSessionDataAndUpdateStore());
+    dispatch(refillCartData());
   }, [dispatch]);
 
   return (
@@ -40,12 +43,13 @@ export const App = () => {
         <Route path="/" element={<Root />}>
           <Route index element={<Navigate to="/home" replace />} />
           <Route path="home" element={<ListingWrapper />} />
-          <Route path="product/:productId" element={<ProductDetails/>} />
+          <Route path="product/:productId" element={<ProductDetails />} />
           <Route path="about" element={<About />} />
           <Route path="sign-up" element={<SignUp />} />
           <Route path="sign-in" element={<SignIn />} />
           <Route path="account" element={<Account />} />
           <Route path="logout" element={<Logout />} />
+          <Route path="checkout" element={<Checkout />} />
           <Route path="*" element={<ListingWrapper />} />
           <Route path="*" element={<Navigate to="/home" replace />} />
         </Route>

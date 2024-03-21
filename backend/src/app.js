@@ -8,6 +8,9 @@ const session = require('express-session');
 const cors = require('cors');
 const RedisStore = require('connect-redis')(session);
 const Redis = require("ioredis");
+const { v4: uuidv4 } = require('uuid');
+const cookieParser = require('cookie-parser');
+const supabase = require('./config/supabase');
 
 // Middleware to trust proxy headers
 app.set('trust proxy', 1);
@@ -45,16 +48,33 @@ initializePassport(passport, client);
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Cookie parser
+app.use(cookieParser());
+
 // Use CORS
 app.use(cors({
   origin: ['http://localhost:5173', 'https://ecommerce-app-frontend-d845.onrender.com', 'https://pixabay.com'],
   credentials: true
 }));
 
-// // Redirect root URL to "/home"
-// app.get('/', (req, res) => {
-//   res.redirect('/home');
-// });
+const initializeCartId = async (req, res, next) => {
+  try {
+    if (!req.session.cartid) {
+      req.session.cartid = uuidv4(); // Generate new cartid if not present
+      const cartid = req.session.cartid;
+      await supabase.from('cart').insert({ cartid }).single();
+    } else {
+      console.log(`Session already has a cartid: ${req.session.cartid}`);
+    }
+    next();
+  } catch (error) {
+    console.error('Error inserting into cart:', error);
+    // Handle the error
+    next(error); // Pass the error to the error handling middleware
+  }
+};
+
+app.use(initializeCartId);
 
 // Images for products
 app.use('/images', express.static(path.join(__dirname, 'images')));
@@ -79,13 +99,14 @@ app.use((error, req, res, next) => {
 
 // Route setup (need to consider moving Redis interaction logic inside routes)
 app.use('/home', require('./routes/products.js'));
-app.use('/sign-up', require('./routes/register.js')); 
+app.use('/sign-up', require('./routes/register.js'));
 app.use('/sign-in', require('./routes/login.js'));
 const logoutRouter = require('./routes/logout.js')(client); // Pass the Redis client object
 app.use('/logout', logoutRouter);
 app.use('/api-session', require('./routes/session.js'));
 app.use('/session-test', require('./routes/session-test.js'));
 app.use('/update-account', require('./routes/account.js'));
+app.use('/cart', require('./routes/cart.js'));
 
 // Wildcard route and debugging middleware 
 // React Routing and server side rendering are clashing at the moment, leads to "Not found" error on hosted site, this might help
