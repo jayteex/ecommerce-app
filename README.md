@@ -6,7 +6,7 @@ This is a PERN application, with a Postgres database, Node/Express backend, and 
 
 Work in progress. See commits/code for details. 
 
-Application is under active development and usually gets 1 commit per weekday.
+After a short hiatus, the application is back under active development. Should be done by the end of April at the latest.
 
 ## How to use
 
